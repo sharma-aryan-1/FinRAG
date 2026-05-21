@@ -1,0 +1,30 @@
+  # Python
+  __pycache__/
+  *.pyc
+  .venv/
+  .env
+  dist/
+  build/
+  *.egg-info/
+
+  # uv
+  .uv-cache/
+
+  # data
+  data/raw/*
+  data/processed/*
+  data/duckdb/*
+  !data/raw/.gitkeep
+  !data/processed/.gitkeep
+  !data/duckdb/.gitkeep
+
+  # Qdrant local volume
+  infra/qdrant_storage/
+
+  # OS
+  .DS_Store
+  Thumbs.db
+
+  # IDE
+  .vscode/
+  .idea/
