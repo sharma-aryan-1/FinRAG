@@ -28,3 +28,6 @@
   # IDE
   .vscode/
   .idea/
+
+  # backend
+  backend/.env
