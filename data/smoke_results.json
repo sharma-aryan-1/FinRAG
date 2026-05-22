@@ -10,80 +10,80 @@
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.7227135,
+      "top_score": 0.9969957,
       "top_ticker": "AAPL",
       "top_fiscal_year": 2023,
-      "duration_ms": 715
+      "duration_ms": 800
     },
     {
       "name": "02_tsla_rnd_spend",
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.58669007,
+      "top_score": 0.971564,
       "top_ticker": "TSLA",
       "top_fiscal_year": 2022,
-      "duration_ms": 138
+      "duration_ms": 409
     },
     {
       "name": "03_supply_chain_risks",
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.7121502,
+      "top_score": 0.8044059,
       "top_ticker": "AAPL",
-      "top_fiscal_year": 2022,
-      "duration_ms": 122
+      "top_fiscal_year": 2024,
+      "duration_ms": 737
     },
     {
       "name": "04_jpm_net_interest_income",
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.6979135,
+      "top_score": 0.9938548,
       "top_ticker": "JPM",
       "top_fiscal_year": 2023,
-      "duration_ms": 126
+      "duration_ms": 356
     },
     {
       "name": "05_aapl_2024_filter",
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.4105258,
+      "top_score": 0.5307838,
       "top_ticker": "AAPL",
       "top_fiscal_year": 2024,
-      "duration_ms": 130
+      "duration_ms": 612
     },
     {
       "name": "06_tables_only_filter",
       "passed": true,
       "reasons": [],
       "n_chunks": 5,
-      "top_score": 0.54247326,
+      "top_score": 0.9092645,
       "top_ticker": "JPM",
-      "top_fiscal_year": 2023,
-      "duration_ms": 122
+      "top_fiscal_year": 2022,
+      "duration_ms": 668
     },
     {
       "name": "07_tsla_deliveries_multi_year",
       "passed": true,
       "reasons": [],
       "n_chunks": 8,
-      "top_score": 0.6136585,
+      "top_score": 0.98651993,
       "top_ticker": "TSLA",
-      "top_fiscal_year": 2023,
-      "duration_ms": 138
+      "top_fiscal_year": 2022,
+      "duration_ms": 284
     },
     {
       "name": "08_cross_company_ai",
       "passed": true,
       "reasons": [],
       "n_chunks": 8,
-      "top_score": 0.5091419,
-      "top_ticker": "AAPL",
+      "top_score": 0.971564,
+      "top_ticker": "JPM",
       "top_fiscal_year": 2024,
-      "duration_ms": 131
+      "duration_ms": 2911
     }
   ]
 }

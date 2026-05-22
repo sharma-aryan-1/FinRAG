@@ -20,16 +20,19 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from finrag.retrieval.vector import RetrievedChunk, search
+from finrag.retrieval.rerank import rerank_search
+from finrag.retrieval.vector import RetrievedChunk
 
 # parse.py-style root resolution
 REPO_ROOT = Path(__file__).resolve().parents[4]
 RESULTS_PATH = REPO_ROOT / "data" / "smoke_results.json"
 
-# Any chunk scoring below this is treated as "embedder probably broken".
-# Cohere v3 + cosine on a relevant chunk is typically 0.5–0.8; under 0.35
-# means the query side isn't aligning to the document side at all.
-SCORE_FLOOR = 0.35
+# Smoke now hits rerank_search — same path as /query. Score is Cohere
+# Rerank v3's relevance_score in [0, 1]. A relevant top-1 is typically
+# > 0.5 for well-formed queries. < 0.1 means the reranker thinks none of
+# the candidates actually answer the query — usually a sign of retrieval
+# upstream returning irrelevant candidates.
+SCORE_FLOOR = 0.10
 
 
 # ── Canary cases ─────────────────────────────────────────────────────────
@@ -177,7 +180,7 @@ def _check_case(case: Case, chunks: list[RetrievedChunk]) -> CaseResult:
 
 def run_case(case: Case) -> CaseResult:
     t0 = time.perf_counter()
-    chunks = search(
+    chunks = rerank_search(
         question=case.question,
         top_k=case.top_k,
         ticker=case.ticker,

@@ -107,6 +107,29 @@ def _build_filter(
     return Filter(must=conditions) if conditions else None
 
 
+# ── Payload → RetrievedChunk ──────────────────────────────────────────────
+def payload_to_chunk(payload: dict, score: float) -> RetrievedChunk:
+    """Convert a Qdrant payload + score into a RetrievedChunk.
+
+    Shared by dense search and the hybrid retriever's hydration step — keeps
+    the mapping in one place so adding a field to the model means editing
+    one function, not three.
+    """
+    return RetrievedChunk(
+        chunk_id=payload["chunk_id"],
+        score=score,
+        text=payload["text"],
+        chunk_type=payload["chunk_type"],
+        section_title=payload.get("section_title"),
+        ticker=payload["ticker"],
+        company_name=payload["company_name"],
+        fiscal_year=payload["fiscal_year"],
+        period_of_report=payload["period_of_report"],
+        accession_number=payload["accession_number"],
+        sec_url=payload["sec_url"],
+    )
+
+
 # ── Retrieval ─────────────────────────────────────────────────────────────
 def search(
     question: str,
@@ -115,14 +138,15 @@ def search(
     fiscal_year: int | None = None,
     chunk_type: str | None = None,
 ) -> list[RetrievedChunk]:
-    """End-to-end: embed the question, search Qdrant, return chunks + scores."""
+    """Dense-only retrieval: embed the question, search Qdrant, return chunks.
+
+    Kept available for direct testing and the eval harness's comparison runs.
+    The user-facing /query endpoint uses hybrid_search instead.
+    """
     qdrant = get_qdrant_client()
     query_vector = embed_query(question)
     query_filter = _build_filter(ticker, fiscal_year, chunk_type)
 
-    # query_points is the modern Qdrant API (replaces deprecated `search`).
-    # `with_payload=True` is the default but worth being explicit — without
-    # it, you get only point IDs and scores, and lose all citation info.
     response = qdrant.query_points(
         collection_name=COLLECTION_NAME,
         query=query_vector,
@@ -130,20 +154,23 @@ def search(
         limit=top_k,
         with_payload=True,
     )
+    return [payload_to_chunk(p.payload, p.score) for p in response.points]
 
-    return [
-        RetrievedChunk(
-            chunk_id=point.payload["chunk_id"],
-            score=point.score,
-            text=point.payload["text"],
-            chunk_type=point.payload["chunk_type"],
-            section_title=point.payload.get("section_title"),
-            ticker=point.payload["ticker"],
-            company_name=point.payload["company_name"],
-            fiscal_year=point.payload["fiscal_year"],
-            period_of_report=point.payload["period_of_report"],
-            accession_number=point.payload["accession_number"],
-            sec_url=point.payload["sec_url"],
-        )
-        for point in response.points
-    ]
+
+def retrieve_by_chunk_ids(chunk_ids: list[str]) -> dict[str, dict]:
+    """Batch-fetch payloads by chunk_id (used by hybrid hydration).
+
+    Returns a dict {chunk_id: payload}. Qdrant stores point IDs as uint64
+    (the hex chunk_id converted), so we convert on the way in and dereference
+    via the payload's own chunk_id field on the way out.
+    """
+    if not chunk_ids:
+        return {}
+    qdrant = get_qdrant_client()
+    point_ids = [int(cid, 16) for cid in chunk_ids]
+    points = qdrant.retrieve(
+        collection_name=COLLECTION_NAME,
+        ids=point_ids,
+        with_payload=True,
+    )
+    return {p.payload["chunk_id"]: p.payload for p in points}
