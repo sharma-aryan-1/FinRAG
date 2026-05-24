@@ -31,3 +31,6 @@ Thumbs.db
 
 # backend
 backend/.env
+
+# claude
+.claude/
