@@ -8,9 +8,12 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "anthropic>=0.40",
     "cohere>=6.1.0",
     "duckdb>=1.5.3",
     "fastapi[standard]>=0.136.1",
+    "google-genai>=2.8.0",
+    "langgraph>=1.2.4",
     "pydantic>=2.12.5",
     "pydantic-settings>=2.14.1",
     "qdrant-client>=1.18.0",

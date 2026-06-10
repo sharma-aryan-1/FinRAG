@@ -26,13 +26,46 @@ export interface QueryResponse {
   chunks: RetrievedChunk[];
 }
 
-// UI-only model for chat history. Day 3 will add streaming `answer` field
-// when the agent produces synthesized text alongside the citations.
+// ── Agent streaming (Decision 17/18) ──────────────────────────────────────
+// One step in the agent's visible reasoning. Mirrors the SSE frames emitted by
+// the backend /agent/stream: each trace frame arrives already shaped as
+// {node, type, data}, so these objects drop straight into ChatMessage.trace.
+export type TraceEvent =
+  | { node: string; type: 'rewrite'; data: { original: string; rewritten: string } }
+  | { node: string; type: 'route'; data: { route: string } }
+  | {
+      node: string;
+      type: 'retrieve';
+      data: { n_chunks: number; top: { chunk_id: string; ticker: string; fy: number }[] };
+    }
+  | {
+      node: string;
+      type: 'tool_call';
+      data: { tool: string; args: Record<string, unknown>; result: unknown };
+    }
+  | { node: string; type: 'fallback'; data: { reason: string } };
+
+// Payload of the terminal `done` SSE frame.
+export interface AgentDone {
+  question: string;
+  answer: string;
+  route: string;
+  chunks: RetrievedChunk[];
+  usage: Record<string, number>;
+  trace: TraceEvent[];
+}
+
+// UI model for chat history. The agent path fills `trace` live, streams tokens
+// into `content`, and attaches `chunks`/`route`/`usage` on the final frame.
 export interface ChatMessage {
   id: string;
   role: 'user' | 'system';
   content: string;
   chunks?: RetrievedChunk[];
-  loading?: boolean;
+  trace?: TraceEvent[];
+  route?: string;
+  usage?: Record<string, number>;
+  streaming?: boolean; // tokens still arriving
+  loading?: boolean; // dispatched, awaiting first event
   error?: string;
 }

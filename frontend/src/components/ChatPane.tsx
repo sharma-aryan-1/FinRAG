@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChatMessage, RetrievedChunk } from '@/lib/types';
 import { ChunkCard } from './ChunkCard';
+import { AgentTrace } from './AgentTrace';
+import { AgentAnswer } from './AgentAnswer';
 
 interface Props {
   messages: ChatMessage[];
@@ -33,8 +35,8 @@ export function ChatPane({ messages, onAsk, selectedChunkId, onChunkSelect }: Pr
   }
 
   return (
-    <div className="flex flex-col h-full border-r border-neutral-200 dark:border-neutral-800">
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-6">
+    <div className="flex flex-col h-full min-h-0 border-r border-neutral-200 dark:border-neutral-800">
+      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto p-4 space-y-6">
         {messages.length === 0 ? (
           <div className="text-center text-neutral-500 mt-12">
             <p className="text-sm">Ask a question about Apple, Tesla, or JPMorgan 10-K filings</p>
@@ -51,26 +53,33 @@ export function ChatPane({ messages, onAsk, selectedChunkId, onChunkSelect }: Pr
                   {m.content}
                 </div>
               ) : (
-                <div className="space-y-2 pl-4 border-l-2 border-neutral-200 dark:border-neutral-800">
-                  {m.loading && (
+                <div className="space-y-3 pl-4 border-l-2 border-neutral-200 dark:border-neutral-800">
+                  {m.loading && !m.trace?.length && (
                     <div className="text-sm text-neutral-500 italic animate-pulse">
-                      retrieving…
+                      thinking…
                     </div>
                   )}
                   {m.error && (
-                    <div className="text-sm text-red-600">
-                      Error: {m.error}
+                    <div className="text-sm text-red-600">Error: {m.error}</div>
+                  )}
+                  {m.trace && m.trace.length > 0 && <AgentTrace trace={m.trace} />}
+                  {m.content && <AgentAnswer text={m.content} streaming={m.streaming} />}
+                  {m.chunks && m.chunks.length > 0 && (
+                    <div className="space-y-2 pt-1">
+                      <div className="text-xs uppercase tracking-wider text-neutral-400">
+                        Sources
+                      </div>
+                      {m.chunks.map((c, i) => (
+                        <ChunkCard
+                          key={c.chunk_id}
+                          chunk={c}
+                          index={i}
+                          selected={c.chunk_id === selectedChunkId}
+                          onSelect={onChunkSelect}
+                        />
+                      ))}
                     </div>
                   )}
-                  {m.chunks?.map((c, i) => (
-                    <ChunkCard
-                      key={c.chunk_id}
-                      chunk={c}
-                      index={i}
-                      selected={c.chunk_id === selectedChunkId}
-                      onSelect={onChunkSelect}
-                    />
-                  ))}
                 </div>
               )}
             </div>

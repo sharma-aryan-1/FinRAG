@@ -13,7 +13,7 @@
       "top_score": 0.9969957,
       "top_ticker": "AAPL",
       "top_fiscal_year": 2023,
-      "duration_ms": 800
+      "duration_ms": 868
     },
     {
       "name": "02_tsla_rnd_spend",
@@ -23,7 +23,7 @@
       "top_score": 0.971564,
       "top_ticker": "TSLA",
       "top_fiscal_year": 2022,
-      "duration_ms": 409
+      "duration_ms": 426
     },
     {
       "name": "03_supply_chain_risks",
@@ -33,7 +33,7 @@
       "top_score": 0.8044059,
       "top_ticker": "AAPL",
       "top_fiscal_year": 2024,
-      "duration_ms": 737
+      "duration_ms": 581
     },
     {
       "name": "04_jpm_net_interest_income",
@@ -43,7 +43,7 @@
       "top_score": 0.9938548,
       "top_ticker": "JPM",
       "top_fiscal_year": 2023,
-      "duration_ms": 356
+      "duration_ms": 385
     },
     {
       "name": "05_aapl_2024_filter",
@@ -53,7 +53,7 @@
       "top_score": 0.5307838,
       "top_ticker": "AAPL",
       "top_fiscal_year": 2024,
-      "duration_ms": 612
+      "duration_ms": 540
     },
     {
       "name": "06_tables_only_filter",
@@ -63,7 +63,7 @@
       "top_score": 0.9092645,
       "top_ticker": "JPM",
       "top_fiscal_year": 2022,
-      "duration_ms": 668
+      "duration_ms": 797
     },
     {
       "name": "07_tsla_deliveries_multi_year",
@@ -73,7 +73,7 @@
       "top_score": 0.98651993,
       "top_ticker": "TSLA",
       "top_fiscal_year": 2022,
-      "duration_ms": 284
+      "duration_ms": 303
     },
     {
       "name": "08_cross_company_ai",
@@ -83,7 +83,7 @@
       "top_score": 0.971564,
       "top_ticker": "JPM",
       "top_fiscal_year": 2024,
-      "duration_ms": 2911
+      "duration_ms": 324
     }
   ]
 }

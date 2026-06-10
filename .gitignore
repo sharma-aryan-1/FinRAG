@@ -35,3 +35,4 @@ backend/.env
 # claude
 .claude/
 PLAN.md
+docs/resume.md

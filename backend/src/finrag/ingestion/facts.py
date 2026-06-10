@@ -141,31 +141,38 @@ def extract_facts(
     ticker: str,
     target_years: list[int],
 ) -> list[dict[str, Any]]:
-    """Walk the XBRL JSON, keep only concepts in CONCEPT_MAP and fiscal years
-    in target_years, return a flat list of row dicts ready to insert.
+    """Walk the XBRL JSON, keep annual (fp='FY') facts for concepts in
+    CONCEPT_MAP whose period falls in target_years, return flat row dicts.
 
-    Deduplication: SEC's XBRL feed contains every restatement and amendment.
-    The same (period, concept, unit) tuple can appear multiple times across
-    successive filings. We keep the *most recently filed* value per logical
-    fact — that's the canonical version (later restatements supersede
-    earlier ones). The PK in `financial_facts` enforces single-version
-    storage; this is where we collapse to it.
+    Period identity is the XBRL `end` date — see the long comment below for why
+    the `fy`/`fp` fields are NOT a reliable period key (they describe the filing,
+    not the value, and conflate a filing's 3 comparative years).
 
-    The XBRL structure has multiple "units" per concept (USD, USD/shares,
-    shares, etc.). We accept all units — the agent will filter by unit when
-    semantically meaningful (e.g. only USD for revenue questions).
+    Deduplication: SEC's XBRL feed contains every restatement and amendment, so
+    the same (period, concept, unit) appears across successive filings. We keep
+    the *most recently filed* value per logical fact (later restatements
+    supersede earlier ones), then collapse the unit dimension to match the
+    `financial_facts` PK (which has no unit column).
     """
     cik = str(company_data.get("cik", ""))
     company_name = company_data.get("entityName", "")
     facts_root = company_data.get("facts", {}).get("us-gaap", {})
 
-    # Key includes `unit` because the same fact can legitimately be reported
-    # in different units (e.g. EPS in 'USD/shares' vs 'USD'). The PK doesn't
-    # have unit, so we'd later need to choose one unit per (period, concept).
-    # In practice, our CONCEPT_MAP entries have one canonical unit each
-    # (revenue → USD, eps_* → USD/shares), so this rarely collapses across
-    # units in practice.
-    best: dict[tuple[str, int, str, str, str, str], dict[str, Any]] = {}
+    # Period identity comes from the XBRL `end` date, NOT the `fy`/`fp` fields.
+    # `fy`/`fp` denote the fiscal year/period of the *filing* a datapoint was
+    # reported in; a single 10-K carries 3 comparative years that all share its
+    # `fy`. Keying on `fy` (as this code used to) collapsed those three periods
+    # into one PK and stored the wrong year's value — every annual figure ended
+    # up off by ~2 years. The `end` date is the true period.
+    #
+    # We keep only annual facts (fp == 'FY'): for all three target filers the
+    # fiscal year equals the calendar year of the period-end date (AAPL ends in
+    # late September, TSLA/JPM on Dec 31), so fiscal_year = period_end.year is
+    # exact. Quarterly facts are intentionally dropped — Apple's fiscal quarters
+    # straddle calendar years (Q1 FY2023 ends Dec 2022), so end.year would not
+    # equal fiscal_year for them. The dict key keeps `unit` (e.g. EPS in
+    # 'USD/shares' vs 'USD'); the unit dimension is collapsed below.
+    best: dict[tuple[str, date, str, str, str], dict[str, Any]] = {}
 
     for gaap_concept, fact_block in facts_root.items():
         line_item = GAAP_TO_LINE_ITEM.get(gaap_concept)
@@ -174,23 +181,25 @@ def extract_facts(
 
         for unit, datapoints in fact_block.get("units", {}).items():
             for dp in datapoints:
-                fy = dp.get("fy")
-                fp = dp.get("fp")
-                if fy not in target_years or not fp:
+                if dp.get("fp") != "FY":  # annual figures only
                     continue
 
                 end_str = dp.get("end")
                 if not end_str:
                     continue
+                period_end = date.fromisoformat(end_str)
+                fiscal_year = period_end.year
+                if fiscal_year not in target_years:
+                    continue
 
                 filed_str = dp.get("filed")
                 filed_date_val = date.fromisoformat(filed_str) if filed_str else None
 
-                key = (ticker, fy, fp, line_item, gaap_concept, unit)
+                # Dedup on the true period; keep the most-recently-filed value
+                # (a later filing's restatement supersedes the original).
+                key = (ticker, period_end, line_item, gaap_concept, unit)
                 existing = best.get(key)
                 if existing is not None:
-                    # Keep the most-recently-filed version. Treat missing
-                    # filed_date as older than any concrete date.
                     existing_filed = existing["filed_date"]
                     if existing_filed and filed_date_val and filed_date_val <= existing_filed:
                         continue
@@ -201,9 +210,9 @@ def extract_facts(
                     "ticker": ticker,
                     "company_name": company_name,
                     "cik": cik,
-                    "fiscal_year": fy,
-                    "fiscal_period": fp,
-                    "period_end_date": date.fromisoformat(end_str),
+                    "fiscal_year": fiscal_year,
+                    "fiscal_period": "FY",
+                    "period_end_date": period_end,
                     "line_item": line_item,
                     "gaap_concept": gaap_concept,
                     "value": float(dp["val"]),
@@ -213,12 +222,13 @@ def extract_facts(
                     "filed_date": filed_date_val,
                 }
 
-    # Now also collapse the unit dimension. The PK in financial_facts is
-    # (ticker, fy, fp, line_item, gaap_concept) — no unit. Pick the most
-    # recently filed unit; ties broken by lexicographic unit name (stable).
+    # Now collapse the unit dimension. The PK in financial_facts is
+    # (ticker, fiscal_year, fiscal_period, line_item, gaap_concept) — no unit.
+    # Pick the most recently filed unit; ties broken by lexicographic unit name
+    # (stable). fiscal_period is always 'FY' here.
     by_pk: dict[tuple[str, int, str, str, str], dict[str, Any]] = {}
-    for (t, fy, fp, li, gc, _unit), row in best.items():
-        pk = (t, fy, fp, li, gc)
+    for row in best.values():
+        pk = (row["ticker"], row["fiscal_year"], "FY", row["line_item"], row["gaap_concept"])
         existing = by_pk.get(pk)
         if existing is None:
             by_pk[pk] = row

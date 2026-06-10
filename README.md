@@ -2,7 +2,7 @@
 
 An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder reranking, structured-data fusion via DuckDB, and a split-pane citation UI, built from the ground up to demonstrate production ML engineering.
 
-> Currently mid-build: Days 1 and 2 of the 5-day plan are complete. The agent layer (LangGraph + Claude + tool use), evaluation harness, and edge-inference variant are still ahead. See [Roadmap](#roadmap).
+> Currently mid-build: Days 1–3 of the 5-day plan are complete — retrieval, the structured-data side, **and the agent layer (LangGraph + Claude tool use + streamed trace UI)**. The evaluation harness and edge-inference variant are still ahead. See [Roadmap](#roadmap).
 
 ---
 
@@ -13,6 +13,9 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 - **Structured-data side**: SEC XBRL Company Facts API → DuckDB `financial_facts` table with canonicalized line items across filers. Enables one-line SQL for cross-company and multi-year financial queries
 - **Split-pane web UI**: Next.js 14 chat with a live citation viewer that renders both narrative passages and HTML tables, with click-through to the original filing on SEC.gov
 - **Citation-clean by construction**: every retrieved chunk carries full provenance (ticker, fiscal year, section, accession number, SEC URL), no joins needed at query time
+- **LangGraph agent** (`/agent`): plans and routes each question (semantic retrieval vs structured SQL), runs a Claude Sonnet 4.6 native tool-loop over three tools (`sql_query`, `calculator`, `lookup_citation`), and synthesizes a grounded, cited answer
+- **Streamed agent trace** (`/agent/stream`, Server-Sent Events): node-level reasoning milestones *and* token-by-token answer streaming, rendered as a live trace UI (with the agent's generated SQL inline)
+- **Provider seam**: synthesis/agent backend is swappable between Anthropic Claude and Google Gemini behind neutral types — both wired for evaluation A/B
 - **CI-ready smoke harness**: 8 canary cases covering filter compliance, score sanity, cross-company retrieval; runs in <2s
 
 ---
@@ -65,9 +68,11 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 | Fusion | Reciprocal Rank Fusion, k=60 | Calibration-free combination of incompatible score scales |
 | Reranking | Cohere Rerank v3 | Cross-encoder over fused top-50 → top-K; fixes entity-disambiguation failures |
 | Structured store | DuckDB | Columnar, embedded, real SQL which is ideal for financial-statement queries |
+| Agent orchestration | LangGraph | Typed state machine: plan → route → retrieve → tool-loop → synthesize, with streamed trace (no LangChain) |
+| LLM (synthesis + agent) | Anthropic Claude Sonnet 4.6 (`claude-sonnet-4-6`) | Reliable native tool use; Gemini 2.5 Flash-Lite wired as the swappable alternate |
 | Document parsing | Unstructured.io | Section-aware chunking with table preservation |
 | Backend | FastAPI (Python 3.11, uv-managed) | Async-first, Pydantic-validated, plays well with the ML ecosystem |
-| Frontend | Next.js 14 + Tailwind | App Router, TypeScript, split-pane chat + citation viewer |
+| Frontend | Next.js 14 + Tailwind + react-markdown | App Router, TypeScript, split-pane chat + live agent-trace UI |
 | Data source | SEC EDGAR + XBRL Company Facts API | Free, structured, comprehensive |
 
 ---
@@ -149,7 +154,7 @@ cd frontend
 npm run dev
 ```
 
-Open **http://localhost:3000** in your browser. Ask a question like *"How did Apple's services revenue change in 2023?"* and click any citation to view the full source passage.
+Open **http://localhost:3000** in your browser. Ask a question like *"How did Apple's services revenue change in 2023?"* and watch the agent's trace stream live — query rewrite, route decision, retrieval, any tool calls (with the generated SQL inline), and the token-by-token answer — then click any citation to view the full source passage.
 
 ---
 
@@ -159,7 +164,8 @@ Open **http://localhost:3000** in your browser. Ask a question like *"How did Ap
 FinRAG/
 ├── docs/
 │   ├── day1.md                          # Day 1 reference (dense retrieval foundation)
-│   └── day2.md                          # Day 2 reference (full funnel + DuckDB + UI)
+│   ├── day2.md                          # Day 2 reference (full funnel + DuckDB + UI)
+│   └── day3.md                          # Day 3 reference (agent + tools + streaming + trace UI)
 │
 ├── infra/
 │   └── docker-compose.yaml              # Qdrant
@@ -167,8 +173,8 @@ FinRAG/
 ├── backend/                             # Python + FastAPI
 │   ├── pyproject.toml                   # uv-managed
 │   └── src/finrag/
-│       ├── config.py                    # pydantic-settings
-│       ├── main.py                      # FastAPI app: /health, /query
+│       ├── config.py                    # pydantic-settings (llm_provider seam)
+│       ├── main.py                      # FastAPI: /health, /query, /answer, /agent, /agent/stream
 │       ├── ingestion/
 │       │   ├── edgar.py                 # SEC scraper (handles paginated filers)
 │       │   ├── parse.py                 # Unstructured.io → chunks
@@ -179,14 +185,17 @@ FinRAG/
 │       │   ├── lexical.py               # BM25 inverted index
 │       │   ├── hybrid.py                # RRF fusion
 │       │   └── rerank.py                # Cohere Rerank v3
+│       ├── llm/                         # provider seam: base, dispatchers, claude.py, gemini.py
+│       ├── tools/                       # sql_query, calculator, lookup_citation (+ registry)
+│       ├── agent/                       # LangGraph: state, nodes, graph
 │       └── eval/
 │           └── smoke.py                 # 8-case canary harness
 │
 ├── frontend/                            # Next.js 14 + TypeScript + Tailwind
 │   └── src/
-│       ├── app/                         # App Router pages
-│       ├── components/                  # ChatPane, ChunkCard, CitationViewer
-│       └── lib/                         # api.ts, types.ts
+│       ├── app/                         # App Router (page.tsx drives streamAgent)
+│       ├── components/                  # ChatPane, ChunkCard, CitationViewer, AgentTrace, AgentAnswer
+│       └── lib/                         # api.ts (streamAgent SSE client), types.ts
 │
 └── data/                                # gitignored; populated by ingestion scripts
     ├── raw/                             # downloaded 10-K HTML + metadata
@@ -203,11 +212,11 @@ FinRAG/
 |---|---|---|
 | 1 | Done | EDGAR scraper, document parsing, chunking, Cohere embeddings → Qdrant, dense `/query` endpoint, smoke harness |
 | 2 | Done | BM25 + RRF hybrid retrieval, Cohere Rerank v3, DuckDB structured-data side from SEC XBRL, Next.js split-pane UI |
-| 3 | Next | LangGraph agent (rewrite → route → retrieve → tool-loop → synthesize), Claude Sonnet 4.5 integration, SQL/calculator/citation tools, streamed agent trace |
-| 4 | Planned | Ragas + custom evaluation across 4 difficulty tiers, Llama 3.2 3B Q4_K_M edge variant, benchmark table |
+| 3 | Done | LangGraph agent (plan/route → retrieve → tool-loop → synthesize), Claude Sonnet 4.6 + provider seam, SQL/calculator/citation tools, SSE streaming, live agent-trace UI |
+| 4 | Next | Ragas + custom evaluation across 4 difficulty tiers, Claude-vs-Gemini A/B, Llama 3.2 3B Q4_K_M edge variant, benchmark table |
 | 5 | Planned | Deploy (Vercel + Railway), README polish, demo recording |
 
-See [`docs/day1.md`](./docs/day1.md) and [`docs/day2.md`](./docs/day2.md) for in-depth coverage of decisions made, bugs encountered, and concepts learned at each stage.
+See [`docs/day1.md`](./docs/day1.md), [`docs/day2.md`](./docs/day2.md), and [`docs/day3.md`](./docs/day3.md) for in-depth coverage of decisions made, bugs encountered, and concepts learned at each stage.
 
 ---
 

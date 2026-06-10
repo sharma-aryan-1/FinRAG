@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { ChatPane } from '@/components/ChatPane';
 import { CitationViewer } from '@/components/CitationViewer';
-import { query } from '@/lib/api';
-import { ChatMessage, RetrievedChunk } from '@/lib/types';
+import { streamAgent } from '@/lib/api';
+import { AgentDone, ChatMessage, RetrievedChunk, TraceEvent } from '@/lib/types';
 
 export default function Page() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -16,33 +16,73 @@ export default function Page() {
       role: 'user',
       content: question,
     };
+    const sysId = crypto.randomUUID();
     const sysMsg: ChatMessage = {
-      id: crypto.randomUUID(),
+      id: sysId,
       role: 'system',
       content: '',
       loading: true,
+      trace: [],
     };
     setMessages((prev) => [...prev, userMsg, sysMsg]);
 
+    // Patch just this run's system message as events stream in.
+    const patch = (fn: (m: ChatMessage) => ChatMessage) =>
+      setMessages((prev) => prev.map((m) => (m.id === sysId ? fn(m) : m)));
+
     try {
-      const res = await query({ question, top_k: 5 });
-      setMessages((prev) =>
-        prev.map((m) =>
-          m.id === sysMsg.id ? { ...m, loading: false, chunks: res.chunks } : m,
-        ),
-      );
-      // Auto-select the top chunk so the viewer always shows something
-      // useful right after a query.
-      if (res.chunks.length > 0) {
-        setSelectedChunk(res.chunks[0]);
-      }
+      await streamAgent(question, (event, data) => {
+        switch (event) {
+          case 'rewrite':
+          case 'route':
+          case 'retrieve':
+          case 'tool_call':
+          case 'fallback':
+            // Trace frames already arrive shaped as TraceEvent ({node,type,data}).
+            patch((m) => ({
+              ...m,
+              loading: false,
+              trace: [...(m.trace ?? []), data as TraceEvent],
+              // A tool call ends the model's pre-tool narration; clear it so the
+              // real answer streams in clean (matches the authoritative `done`).
+              ...(event === 'tool_call' ? { content: '' } : {}),
+            }));
+            break;
+          case 'token':
+            patch((m) => ({
+              ...m,
+              loading: false,
+              streaming: true,
+              content: m.content + ((data as { text?: string }).text ?? ''),
+            }));
+            break;
+          case 'done': {
+            const d = data as AgentDone;
+            patch((m) => ({
+              ...m,
+              loading: false,
+              streaming: false,
+              content: d.answer || m.content,
+              chunks: d.chunks,
+              route: d.route,
+              usage: d.usage,
+            }));
+            if (d.chunks.length > 0) setSelectedChunk(d.chunks[0]);
+            break;
+          }
+          case 'error':
+            patch((m) => ({
+              ...m,
+              loading: false,
+              streaming: false,
+              error: (data as { message?: string }).message ?? 'stream error',
+            }));
+            break;
+        }
+      });
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err);
-      setMessages((prev) =>
-        prev.map((m) =>
-          m.id === sysMsg.id ? { ...m, loading: false, error: errorMsg } : m,
-        ),
-      );
+      patch((m) => ({ ...m, loading: false, streaming: false, error: errorMsg }));
     }
   }
 
@@ -51,11 +91,11 @@ export default function Page() {
       <header className="border-b border-neutral-200 dark:border-neutral-800 px-6 py-3 flex items-center justify-between bg-white dark:bg-neutral-950">
         <h1 className="text-base font-semibold tracking-tight">FinRAG</h1>
         <div className="text-xs text-neutral-500">
-          SEC 10-K retrieval · hybrid + rerank
+          SEC 10-K agent · plan → retrieve → tools → answer
         </div>
       </header>
 
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+      <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         <ChatPane
           messages={messages}
           onAsk={handleAsk}
