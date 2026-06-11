@@ -33,6 +33,10 @@ export interface QueryResponse {
 export type TraceEvent =
   | { node: string; type: 'rewrite'; data: { original: string; rewritten: string } }
   | { node: string; type: 'route'; data: { route: string } }
+  // The model's own narration between tool calls ("let me check X to find Y").
+  // Synthesized client-side: the tokens streamed before a tool_call are its
+  // reasoning, so we snapshot them into the trace instead of discarding them.
+  | { node: string; type: 'thought'; data: { text: string } }
   | {
       node: string;
       type: 'retrieve';

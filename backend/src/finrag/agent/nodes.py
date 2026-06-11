@@ -11,12 +11,38 @@ trace event so the frontend (Decision 18) can render it as its own step.
 
 from __future__ import annotations
 
+from functools import lru_cache
+
 from finrag.agent.state import AgentState
+from finrag.ingestion.facts import corpus_companies, corpus_years
 from finrag.llm import generate_text, run_tool_loop_stream, synthesize
 from finrag.llm.base import ToolCall, format_chunks_for_prompt
 from finrag.retrieval.rerank import rerank_search
 
 MAX_TOOL_ITERS = 5  # hard cap so a confused model can't loop forever
+
+
+@lru_cache(maxsize=1)
+def _corpus_grounding() -> str:
+    """Tell the model the exact known universe so vague references ('these three
+    companies', 'all of them') resolve to real corpus members instead of the
+    model guessing (it would otherwise pull in Microsoft/Google). Data-driven —
+    reads the loaded DuckDB, so it can never drift from what's queryable."""
+    companies = corpus_companies()
+    if not companies:  # corpus not loaded — emit nothing rather than a wrong claim
+        return ""
+    lo, hi = corpus_years()
+    span = f"fiscal years {lo}–{hi}" if lo and hi else "the available fiscal years"
+    listing = "; ".join(f"{name} ({ticker})" for ticker, name in companies)
+    return (
+        f"\n\nKNOWN CORPUS — the dataset contains EXACTLY these {len(companies)} "
+        f"companies, {span}: {listing}.\n"
+        "When the question refers to the companies without naming them ('these "
+        "companies', 'the three companies', 'all of them', 'each company'), it means "
+        "exactly this set — resolve the reference to these names. Never introduce a "
+        "company outside this set; if asked about one that isn't listed, say it is not "
+        "in the corpus rather than answering from general knowledge."
+    )
 
 
 def _stream_writer():
@@ -54,7 +80,7 @@ _AGENT_SYSTEM = """You are a financial analyst assistant answering questions abo
 You have tools:
 - sql_query: get EXACT figures for TOP-LEVEL metrics only (total revenue, net income, total assets, margins). Prefer it for those over reading numbers from text. It does NOT have segment/product/regional figures (e.g. services revenue, iPhone revenue) — for those, read the value from the context chunks and cite [N]. If sql_query returns an error, fall back to the context.
 - calculator: do arithmetic (growth rates, margins, ratios). Extract numbers, then compute — never do multi-digit math in your head.
-- lookup_citation: re-fetch a chunk's full text by chunk_id if you need to quote it exactly.
+- lookup_citation: re-fetch a chunk's full text by chunk_id if you need to quote it exactly. Pass the exact id shown as (id=...) in the chunk's header — never the [N] anchor.
 
 Rules:
 1. Ground every claim in the provided context chunks or tool results. If neither contains the answer, say so — do not use prior knowledge.
@@ -89,7 +115,9 @@ def plan(state: AgentState) -> AgentState:
     """One call that both rewrites the query and routes it. Emits two trace
     events so the frontend still shows rewrite and route as distinct steps."""
     original = state["question"]
-    raw = generate_text(_PLAN_SYSTEM, original, max_output_tokens=128)
+    # Ground the rewrite in the known corpus so "these 3 companies" expands to the
+    # real names here, before retrieval and the agent ever see the query.
+    raw = generate_text(_PLAN_SYSTEM + _corpus_grounding(), original, max_output_tokens=128)
     rewritten, decision = _parse_plan(raw, original)
     return {
         "rewritten_query": rewritten,
@@ -156,9 +184,12 @@ def agent(state: AgentState) -> AgentState:
         )
 
     result = run_tool_loop_stream(
-        _AGENT_SYSTEM,
+        _AGENT_SYSTEM + _corpus_grounding(),
         user_text,
-        max_tokens=1024,
+        # 1024 truncated detailed multi-company answers mid-sentence (e.g. a risk
+        # comparison table got cut off). 4096 comfortably fits the longest answers
+        # we produce while staying well under Sonnet's output limit.
+        max_tokens=4096,
         max_iters=MAX_TOOL_ITERS,
         on_text=on_text,
         on_tool_call=on_tool_call,

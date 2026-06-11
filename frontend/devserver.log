@@ -16,3 +16,1131 @@
  ✓ Compiled in 566ms (1032 modules)
  ✓ Compiled in 515ms (1032 modules)
  GET / 200 in 119ms
+ GET / 200 in 55ms
+ ✓ Compiled in 687ms (1032 modules)
+ ✓ Compiled in 444ms (1032 modules)
+ ✓ Compiled in 507ms (1032 modules)
+ ✓ Compiled in 377ms (1032 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 521ms (1021 modules)
+ GET /_next/static/css/app/layout.css?v=1781064572647 404 in 652ms
+ GET /_next/static/css/app/layout.css?v=1781064572647 404 in 70ms
+ ✓ Compiled in 441ms (1035 modules)
+ ✓ Compiled in 187ms (1035 modules)
+ ✓ Compiled in 394ms (1035 modules)
+ ✓ Compiled in 190ms (1035 modules)
+ ✓ Compiled in 363ms (1035 modules)
+ ⨯ ./src/components/CitationViewer.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+    ,-[[36;1;4mD:\FinRAG\frontend\src\components\CitationViewer.tsx[0m:13:1]
+ [2m13[0m |   const isTable = chunk.chunk_type === 'table';
+ [2m14[0m | 
+ [2m15[0m |   return (
+ [2m16[0m |     <div className="h-full overflow-y-auto">
+    : [31;1m     ^^^[0m
+ [2m17[0m |       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur px-4 py-2">
+ [2m18[0m |         <span className="text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+ [2m19[0m |           Source
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/CitationViewer.tsx
+./src/app/page.tsx
+ ○ Compiling /_error ...
+ ⨯ ./src/components/CitationViewer.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+    ,-[[36;1;4mD:\FinRAG\frontend\src\components\CitationViewer.tsx[0m:13:1]
+ [2m13[0m |   const isTable = chunk.chunk_type === 'table';
+ [2m14[0m | 
+ [2m15[0m |   return (
+ [2m16[0m |     <div className="h-full overflow-y-auto">
+    : [31;1m     ^^^[0m
+ [2m17[0m |       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur px-4 py-2">
+ [2m18[0m |         <span className="text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+ [2m19[0m |           Source
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/CitationViewer.tsx
+./src/app/page.tsx
+ GET / 500 in 15ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat 'D:\FinRAG\frontend\.next\server\vendor-chunks\extend.js'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/extend' in D:\FinRAG\frontend\.next\server for build dependencies doesn't lead to expected result 'D:\FinRAG\frontend\.next\server\vendor-chunks\extend.js', but to 'Error: Can't resolve './vendor-chunks/extend' in 'D:\FinRAG\frontend\.next\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/extend (expected D:\FinRAG\frontend\.next\server\vendor-chunks\extend.js)
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/has-flag' in D:\FinRAG\frontend\.next\server for build dependencies doesn't lead to expected result 'D:\FinRAG\frontend\.next\server\vendor-chunks\has-flag.js', but to 'Error: Can't resolve './vendor-chunks/has-flag' in 'D:\FinRAG\frontend\.next\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/has-flag (expected D:\FinRAG\frontend\.next\server\vendor-chunks\has-flag.js)
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/inline-style-parser' in D:\FinRAG\frontend\.next\server for build dependencies doesn't lead to expected result 'D:\FinRAG\frontend\.next\server\vendor-chunks\inline-style-parser.js', but to 'Error: Can't resolve './vendor-chunks/inline-style-parser' in 'D:\FinRAG\frontend\.next\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/inline-style-parser (expected D:\FinRAG\frontend\.next\server\vendor-chunks\inline-style-parser.js)
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving './vendor-chunks/ms' in D:\FinRAG\frontend\.next\server for build dependencies doesn't lead to expected result 'D:\FinRAG\frontend\.next\server\vendor-chunks\ms.js', but to 'Error: Can't resolve './vendor-chunks/ms' in 'D:\FinRAG\frontend\.next\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ./vendor-chunks/ms (expected D:\FinRAG\frontend\.next\server\vendor-chunks\ms.js)
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file D:\FinRAG\frontend\.next\server\webpack-runtime.js
+<w>  at file dependencies D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file D:\FinRAG\frontend\.next\server\app\page.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\loader-runner\LoaderRunner.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\bundle5.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\compiled\webpack\webpack.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\plugins\define-env-plugin.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs D:\FinRAG\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+ ✓ Compiled /_error in 272ms (1258 modules)
+ GET / 200 in 173ms
+ ✓ Compiled /_not-found in 175ms (1247 modules)
+ GET /_next/static/chunks/main-app.js?v=1781064636120 404 in 247ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 246ms
+ ✓ Compiled in 449ms (1261 modules)
+ ✓ Compiled in 368ms (1261 modules)
+ ✓ Compiled in 303ms (1261 modules)
+ ✓ Compiled in 263ms (1261 modules)
+ ✓ Compiled in 232ms (1261 modules)
+ ✓ Compiled in 253ms (1261 modules)
+ GET / 200 in 123ms
+ GET / 200 in 54ms
+ ✓ Compiled in 329ms (692 modules)
+ ✓ Compiled in 120ms (692 modules)
+ ✓ Compiled in 794ms (1279 modules)
+ ✓ Compiled in 383ms (1261 modules)
+ ✓ Compiled in 379ms (1261 modules)
+ ✓ Compiled in 341ms (1261 modules)
+ ✓ Compiled in 266ms (1261 modules)
+ ✓ Compiled in 190ms (1261 modules)
+ ✓ Compiled in 230ms (1261 modules)
+ ✓ Compiled in 325ms (1261 modules)
+ ✓ Compiled in 177ms (1261 modules)
+ ✓ Compiled in 179ms (1261 modules)
+ ✓ Compiled in 322ms (1261 modules)
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 69ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 14ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 11ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 9ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 11ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 9ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 13ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 10ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'call')
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 5231 (D:\FinRAG\frontend\.next\server\chunks\383.js:2:14554)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at 3213 (D:\FinRAG\frontend\.next\server\app\page.js:1:787)
+    at t (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:128)
+    at n (D:\FinRAG\frontend\.next\server\app\page.js:2:206122)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206153
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1206)
+    at D:\FinRAG\frontend\.next\server\app\page.js:2:206135
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:2:206180)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/'
+}
+ GET / 500 in 15ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 10ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 12ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 8ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 6ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 9ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 6ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 8ms
+ ⨯ Error: Cannot find module './chunks/vendor-chunks/next.js'
+Require stack:
+- D:\FinRAG\frontend\.next\server\webpack-runtime.js
+- D:\FinRAG\frontend\.next\server\app\page.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\require.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js
+- D:\FinRAG\frontend\node_modules\next\dist\build\utils.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js
+- D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1420:15)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1226:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at t.f.require (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1416)
+    at D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:889
+    at Array.reduce (<anonymous>)
+    at t.e (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:868)
+    at Array.map (<anonymous>)
+    at t.X (D:\FinRAG\frontend\.next\server\webpack-runtime.js:1:1189)
+    at D:\FinRAG\frontend\.next\server\app\page.js:323:47
+    at Object.<anonymous> (D:\FinRAG\frontend\.next\server\app\page.js:326:3)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:244:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1503:12)
+    at mod.require (D:\FinRAG\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:152:16)
+    at requirePage (D:\FinRAG\frontend\node_modules\next\dist\server\require.js:109:84)
+    at D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\FinRAG\frontend\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (D:\FinRAG\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (D:\FinRAG\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (D:\FinRAG\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (D:\FinRAG\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\FinRAG\\frontend\\.next\\server\\webpack-runtime.js',
+    'D:\\FinRAG\\frontend\\.next\\server\\app\\page.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\FinRAG\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/'
+}
+ GET / 500 in 6ms
+[?25h

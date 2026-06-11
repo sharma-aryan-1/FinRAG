@@ -68,6 +68,10 @@ def format_chunks_for_prompt(chunks: list[RetrievedChunk]) -> str:
 
     The [N] anchor at the start of each chunk is what the model references in
     its citations. Position is 1-based to match human-reading convention.
+
+    The id= in the header is the real chunk_id — the only handle the model can
+    pass to lookup_citation. Without it the model has nothing real to deref and
+    fabricates ids like 'chunk_5' (which used to crash the hex→uint64 lookup).
     """
     blocks: list[str] = []
     for i, c in enumerate(chunks, start=1):
@@ -75,7 +79,7 @@ def format_chunks_for_prompt(chunks: list[RetrievedChunk]) -> str:
         # Mark table chunks so the model treats them as structured data and
         # doesn't hallucinate cell positions.
         kind_marker = " [table]" if c.chunk_type == "table" else ""
-        header = f"[{i}] {c.ticker} · FY{c.fiscal_year} · {section}{kind_marker}"
+        header = f"[{i}] {c.ticker} · FY{c.fiscal_year} · {section}{kind_marker}  (id={c.chunk_id})"
         blocks.append(f"{header}\n{c.text}")
     return "\n\n---\n\n".join(blocks)
 

@@ -25,12 +25,12 @@ export function ChunkCard({ chunk, index, selected, onSelect }: Props) {
       onClick={() => onSelect(chunk)}
       className={`w-full text-left rounded-lg border p-3 transition
         ${selected
-          ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40'
-          : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 bg-white dark:bg-neutral-900'
+          ? 'border-lime-500 bg-lime-50 dark:bg-lime-950/40'
+          : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 bg-white dark:bg-neutral-800'
         }`}
     >
-      <div className="flex items-center justify-between text-xs mb-1.5">
-        <span className="font-semibold">
+      <div className="flex items-center justify-between text-xs mb-1.5 font-mono">
+        <span className="font-medium uppercase tracking-wider">
           [{index + 1}] {chunk.ticker} · FY{chunk.fiscal_year}
         </span>
         <span className="text-neutral-500 tabular-nums">

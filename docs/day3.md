@@ -34,48 +34,50 @@ Day 3 turned "smart search" into an **agent**. On top of Day 2's retrieval funne
 ## 2. System architecture (Day 3 state)
 
 ```
-                         user question
-                              │
-                              ▼
-                      FastAPI  /agent  ·  /agent/stream (SSE)
-                              │
-                ┌─────────────┴──────────────────────────┐
-                ▼                   LangGraph StateGraph   │
-         ┌──────────────┐                                  │
-         │  plan node   │  one LLM call: rewrite + route   │
-         └──────┬───────┘  → vector | sql | both           │
-                │ conditional edge (_after_route)          │
-        route∈{vector,both}        route=sql               │
-                ▼                      │                    │
-         ┌──────────────┐             │                    │
-         │ retrieve node│  Day-2 funnel (rerank_search)    │
-         │  top-8 chunks│             │                    │
-         └──────┬───────┘             │                    │
-                └──────────┬──────────┘                    │
-                           ▼                               │
-                   ┌───────────────┐                       │
-                   │  agent node   │  native tool-loop     │
-                   │  (tool_use)   │  ── calls tools ──┐    │
-                   └──────┬────────┘                   │    │
-                          │ final answer        ┌──────▼─────────┐
-                          ▼                     │  tools/        │
-                         END                    │  sql_query     │→ DuckDB
-                                                │  calculator    │  (SELECT/WITH
-        provider seam (llm/):                   │  lookup_citation│   guard)
-        synthesize · generate_text ·            └────────────────┘→ Qdrant
-        run_tool_loop · run_tool_loop_stream
-        dispatch by settings.llm_provider
-        ┌──────────────┐   ┌──────────────┐
-        │  claude.py   │   │  gemini.py   │   ← both implement the same
-        │  tool_use    │   │ func-calling │     neutral ToolLoopResult
-        └──────────────┘   └──────────────┘
+                          user question
+                               │
+                               ▼
+               FastAPI:  /agent   ·   /agent/stream (SSE)
+                               │
+        ╶─ LangGraph StateGraph ─────────────────────────────────╴
+                               │
+                               ▼
+                        ┌─────────────┐
+                        │    plan     │  one LLM call:
+                        │             │  rewrite + route → vector | sql | both
+                        └──────┬──────┘
+                               │ conditional edge
+                    ┌──────────┴───────────┐
+               vector / both              sql
+                    │                      │  (skips retrieval)
+                    ▼                      │
+             ┌─────────────┐               │
+             │  retrieve   │  Day-2 funnel │
+             │             │  → top-8      │
+             └──────┬──────┘               │
+                    └──────────┬───────────┘
+                               ▼
+                        ┌─────────────┐    call    ┌──────────────────┐
+                        │    agent    │ ─────────▶ │ tools/           │
+                        │  tool-loop  │            │   sql_query      │──▶ DuckDB
+                        │  (tool_use) │ ◀───────── │   calculator     │
+                        └──────┬──────┘   result   │   lookup_citation│──▶ Qdrant
+                               │ final answer       └──────────────────┘
+                               ▼
+                              END
 
-   streaming path: graph.stream(stream_mode=["updates","custom"])
-     updates → trace milestones (rewrite/route/retrieve)
-     custom  → live token deltas + tool_call events (LangGraph stream writer)
-                              │ SSE frames
-                              ▼
-              Next.js: streamAgent() → AgentTrace + AgentAnswer (react-markdown)
+        ╶─ provider seam (finrag/llm/) ──────────────────────────╴
+          every LLM call dispatches on settings.llm_provider:
+            claude.py (tool_use)   |   gemini.py (function-calling)
+            → both return the same neutral ToolLoopResult
+
+        ╶─ streaming  (/agent/stream) ───────────────────────────╴
+          graph.stream(stream_mode=["updates","custom"]):
+            updates → trace milestones   (rewrite · route · retrieve)
+            custom  → token deltas + tool_call events  (stream writer)
+                               │  SSE frames
+                               ▼
+          Next.js:  streamAgent()  →  AgentTrace + AgentAnswer (react-markdown)
 ```
 
 ---

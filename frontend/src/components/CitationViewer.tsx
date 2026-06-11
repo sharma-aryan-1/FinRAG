@@ -4,26 +4,38 @@ import { RetrievedChunk } from '@/lib/types';
 
 interface Props {
   chunk: RetrievedChunk | null;
+  onClose?: () => void;
 }
 
-export function CitationViewer({ chunk }: Props) {
-  if (!chunk) {
-    return (
-      <div className="h-full flex items-center justify-center text-neutral-400 text-sm p-8 text-center">
-        Click a citation in the chat to see the full source passage here.
-      </div>
-    );
-  }
+export function CitationViewer({ chunk, onClose }: Props) {
+  if (!chunk) return null;
 
   const isTable = chunk.chunk_type === 'table';
 
   return (
-    <div className="h-full overflow-y-auto p-6">
+    <div className="h-full overflow-y-auto">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur px-4 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400">
+          Source
+        </span>
+        {onClose && (
+          <button
+            onClick={onClose}
+            aria-label="Close source panel"
+            className="grid h-6 w-6 place-items-center rounded-md text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-200 transition"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
+      </div>
+      <div className="p-6">
       <div className="space-y-1 mb-4">
-        <h2 className="text-lg font-semibold">
+        <h2 className="font-serif text-2xl font-normal tracking-tight">
           {chunk.company_name}
         </h2>
-        <div className="text-xs text-neutral-500 space-x-2">
+        <div className="font-mono text-[11px] text-neutral-500 space-x-2">
           <span className="font-medium">{chunk.ticker}</span>
           <span>·</span>
           <span>FY{chunk.fiscal_year}</span>
@@ -65,13 +77,14 @@ export function CitationViewer({ chunk }: Props) {
           href={chunk.sec_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs text-blue-600 hover:underline"
+          className="text-xs text-lime-600 dark:text-lime-400 hover:underline"
         >
           View on SEC.gov ↗
         </a>
         <div className="text-xs text-neutral-400 mt-1">
           Accession: <span className="font-mono">{chunk.accession_number}</span>
         </div>
+      </div>
       </div>
     </div>
   );

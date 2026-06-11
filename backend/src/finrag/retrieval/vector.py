@@ -163,11 +163,22 @@ def retrieve_by_chunk_ids(chunk_ids: list[str]) -> dict[str, dict]:
     Returns a dict {chunk_id: payload}. Qdrant stores point IDs as uint64
     (the hex chunk_id converted), so we convert on the way in and dereference
     via the payload's own chunk_id field on the way out.
+
+    Ids that aren't valid 16-hex chunk_ids (e.g. a value the agent hallucinated
+    like 'chunk_5') are silently dropped rather than raising — a malformed id is
+    just a miss, so callers see it as not-found, not a crash.
     """
     if not chunk_ids:
         return {}
     qdrant = get_qdrant_client()
-    point_ids = [int(cid, 16) for cid in chunk_ids]
+    point_ids: list[int] = []
+    for cid in chunk_ids:
+        try:
+            point_ids.append(int(cid, 16))
+        except ValueError:
+            continue  # not a hex chunk_id → treat as not-found
+    if not point_ids:
+        return {}
     points = qdrant.retrieve(
         collection_name=COLLECTION_NAME,
         ids=point_ids,

@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 from datetime import date
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -328,6 +329,28 @@ def query(sql: str, params: list[Any] | None = None) -> list[dict[str, Any]]:
         return [dict(zip(cols, row)) for row in result]
     finally:
         con.close()
+
+
+# ── Corpus introspection (for grounding the agent) ────────────────────────
+# The agent must never invent companies. These read the *actual* loaded data so
+# the known-universe it's told about can't drift from what's queryable. Cached —
+# the corpus is static within a process.
+@lru_cache(maxsize=1)
+def corpus_companies() -> list[tuple[str, str]]:
+    """Distinct (ticker, company_name) present in financial_facts, ticker-sorted."""
+    rows = query(
+        "SELECT DISTINCT ticker, company_name FROM financial_facts ORDER BY ticker"
+    )
+    return [(r["ticker"], r["company_name"]) for r in rows]
+
+
+@lru_cache(maxsize=1)
+def corpus_years() -> tuple[int | None, int | None]:
+    """(min, max) fiscal_year in the corpus, or (None, None) if empty."""
+    rows = query("SELECT MIN(fiscal_year) AS lo, MAX(fiscal_year) AS hi FROM financial_facts")
+    if rows and rows[0]["lo"] is not None:
+        return int(rows[0]["lo"]), int(rows[0]["hi"])
+    return None, None
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────

@@ -21,6 +21,14 @@ Day 5    deploy + demo
 
 Day 3 is done and documented. **`docs/day3.md` is the durable reference** (decisions, the provider pivot, bugs, concepts, resume material). This file is just the live checkpoint into Day 4.
 
+## End-of-session state (last touched 2026-06-09)
+
+- **Verified live this session:** agent on Claude end-to-end — services canary (+$7.1B/+9%, ~$85.2B), net-income sql route ($96.995B), `/answer` + `/agent` + `/agent/stream` over HTTP, no regression after the streaming refactor. (Prompt-cache reads still 0 — parked, see below.)
+- **Frontend (Decision 18) confirmed working:** trace + token streaming renders; fixed two UI bugs — prod-build-served-to-dev (assets 404 → unstyled/no-hydration) and the left-pane scroll (`min-h-0`). `npm run build` is clean.
+- **Docs all landed:** `docs/day3.md` (incl. a redrawn architecture diagram), `README.md`, and memory (overview refreshed, day3→day4 pointer) are current.
+- **Servers may still be running** from this session: backend `uvicorn` on :8000, frontend `npm run dev` on :3000. Restart per the run steps below if stale (and note gotcha #4 if the UI looks unstyled).
+- **Git:** still all uncommitted — `agent/`, `llm/`, `tools/` untracked; `main.py`, `config.py`, `facts.py`, docs modified. Nothing committed (per convention — commit only when asked).
+
 ## FIRST ACTION NEXT SESSION: Day 4 — evaluation
 
 The system now *asserts* it works (canaries pass); Day 4 makes it *provable*. Suggested order:

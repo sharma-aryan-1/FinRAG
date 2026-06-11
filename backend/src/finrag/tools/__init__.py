@@ -70,7 +70,11 @@ TOOL_SPECS: list[ToolSpec] = [
             "properties": {
                 "chunk_id": {
                     "type": "string",
-                    "description": "The chunk_id of a previously retrieved chunk.",
+                    "description": (
+                        "The chunk_id of a previously retrieved chunk — the exact "
+                        "value shown as (id=...) in that chunk's header. Do not "
+                        "use the [N] anchor or invent an id."
+                    ),
                 }
             },
             "required": ["chunk_id"],
