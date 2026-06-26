@@ -1,6 +1,6 @@
 # FinRAG — Session Handoff
 
-> Point the next session at this file. Auto-memory loads the user profile, working mode, and project overview first; then read this, then `docs/day3.md` for the full Day-3 reference.
+> Point the next session at this file. Auto-memory loads the user profile, working mode, and project overview first; then read this, then `docs/day4.md` (newest) and `docs/day3.md` for the durable references.
 
 ---
 
@@ -10,44 +10,34 @@
 Day 1 ✓  foundation, dense retrieval                (docs/day1.md)
 Day 2 ✓  hybrid funnel + Rerank v3 + DuckDB + UI     (docs/day2.md)
 Day 3 ✓  agent layer — Decisions 14–18 COMPLETE      (docs/day3.md)
-         14 ✓ /answer synthesis + provider seam
-         15 ✓ tools (sql_query / calculator / lookup_citation)
-         16 ✓ LangGraph agent /agent  (verified on Claude)
-         17 ✓ SSE streaming /agent/stream (trace + tokens)
-         18 ✓ frontend live agent-trace UI
-Day 4 →  eval harness + provider A/B + edge variant  ← START HERE
-Day 5    deploy + demo
+Day 4 ✓  eval harness + provider A/B + faithfulness loop  (docs/day4.md)
+Day 5 ◑  edge Llama variant DONE; local demo polish next   (docs/day5.md)  ← START HERE
 ```
 
-Day 3 is done and documented. **`docs/day3.md` is the durable reference** (decisions, the provider pivot, bugs, concepts, resume material). This file is just the live checkpoint into Day 4.
+Days 1–4 done. **The Day-5 edge variant is built, benchmarked, and documented** — `docs/day5.md` is the durable reference (the `local` provider, the tools-on vs synthesis-only A/B, the counterintuitive finding, the 4GB-VRAM deployment constraint). What remains in Day 5 is the **local demo polish** (step 2 below). This file is the live checkpoint.
 
-## End-of-session state (last touched 2026-06-09)
+## End-of-session state (last touched 2026-06-26 — Day 5 edge variant)
 
-- **Verified live this session:** agent on Claude end-to-end — services canary (+$7.1B/+9%, ~$85.2B), net-income sql route ($96.995B), `/answer` + `/agent` + `/agent/stream` over HTTP, no regression after the streaming refactor. (Prompt-cache reads still 0 — parked, see below.)
-- **Frontend (Decision 18) confirmed working:** trace + token streaming renders; fixed two UI bugs — prod-build-served-to-dev (assets 404 → unstyled/no-hydration) and the left-pane scroll (`min-h-0`). `npm run build` is clean.
-- **Docs all landed:** `docs/day3.md` (incl. a redrawn architecture diagram), `README.md`, and memory (overview refreshed, day3→day4 pointer) are current.
-- **Servers may still be running** from this session: backend `uvicorn` on :8000, frontend `npm run dev` on :3000. Restart per the run steps below if stale (and note gotcha #4 if the UI looks unstyled).
-- **Git:** still all uncommitted — `agent/`, `llm/`, `tools/` untracked; `main.py`, `config.py`, `facts.py`, docs modified. Nothing committed (per convention — commit only when asked).
+- **Day 5 edge variant complete (not yet committed).** New: `backend/src/finrag/llm/local.py`. Modified: `config.py` (local_* settings), `llm/__init__.py` (4 dispatchers + `"local"` branch), `eval/harness.py` (local rate + tok/s), `pyproject.toml` (`openai>=1.50`), `uv.lock`. Doc: `docs/day5.md`. Results: `data/eval_results_local_tools.json`, `data/eval_results_local_synth.json`. Memory + MEMORY.md to update.
+- **The finding (counterintuitive — inverts the original hypothesis):** the agentic tool-loop is what makes the 3B model viable, NOT a liability. Factual accuracy **0.80 (tools) vs 0.00 (synthesis-only)** — the model reliably *invokes* `sql_query` but can't read exact figures from prose or chain steps. Full A/B table + evidence in `docs/day5.md`. Honesty regresses slightly with tools (over-answers, 0.80 vs 1.00); multihop fails both ways (~0.14); narrative `[N]` citations fail in both modes (0.00).
+- **Deployment constraint found the hard way:** GTX 1650 Ti has **4GB VRAM**; `llama3.2:3b` loads at 2.9GB → VRAM exhaustion crashed the NVIDIA driver (TDR → full system reboot) mid-run. **Fix: pin Ollama to CPU** (`CUDA_VISIBLE_DEVICES=-1`) → 2.4GB in RAM, 0 VRAM, stable. CPU throughput ~1.6–2.9 tok/s end-to-end, ~50–96s/question. See gotcha #9.
+- **Eval baseline (Claude, Day 4, unchanged):** accuracy 1.00, faithfulness ~0.92, relevance 0.98, ctx precision 0.55, ~$0.39/30-Q.
+- **Live app untouched:** `llm_provider="anthropic"` still default; local is opt-in via `--provider local` / `LLM_PROVIDER=local`. No uvicorn restart needed (no node/prompt change; only a new backend module + dispatcher branch).
+- **Git:** Day-5 work NOT committed (working tree dirty). Commit only when the user asks.
 
-## FIRST ACTION NEXT SESSION: Day 4 — evaluation
+## FIRST ACTION NEXT SESSION: Day 5 step 2 — local demo polish
 
-The system now *asserts* it works (canaries pass); Day 4 makes it *provable*. Suggested order:
+The edge variant (step 1) is done. Remaining Day-5 scope (**locked with user:** local + recorded, no public URL, Ollama runtime):
 
-1. **Build a tiered eval set (30–50 Qs)** across four difficulty tiers:
-   - factual / top-level → **sql** route (exact-match checkable; we have ground truth post-fix)
-   - narrative / segment → **vector** route (faithfulness + citation)
-   - multi-hop → **both** + calculator (e.g. YoY growth, cross-company margin)
-   - honesty → unanswerable from corpus → agent must **decline**, not fabricate
-2. **Ragas + a custom harness** — faithfulness, answer relevance, context precision/recall; plus exact-match assertions on the sql-route numbers.
-3. **Provider A/B** — same retrieval, **Claude vs Gemini**, on the eval set. The seam makes this a `llm_provider` flip; the numbers justify the spend.
-4. **Edge variant** — Llama 3.2 3B Q4_K_M locally, benchmarked vs the cloud agent (quality / latency / cost).
-
-Note the existing `backend/src/finrag/eval/smoke.py` is **retrieval-only** (no LLM) — Day 4's harness is a new, LLM-in-the-loop thing alongside it.
+1. ~~Edge variant~~ ✓ DONE — see `docs/day5.md`.
+2. **Local demo polish** — scripted path (the two canaries + one multi-company question), a recorded loom/gif, and a README "what the eval proves" section pulling Day-4 + Day-5 numbers. No hosting. Decide with the user whether the demo runs on Claude (fast, the live default) or shows the local model (the edge story, but ~50–96s/question on CPU).
+3. **Stretch / parked** (day4.md §10): tighten the top-8 funnel to raise context precision (0.55); thread plan-call tokens into `state["usage"]`; prompt-cache read not landing in the tool-loop (day3.md bug 18). Possible Day-5 follow-up: benchmark an 8B local model — does it close the multihop/citation gap, or is chained tool-reasoning a capability cliff?
 
 ## How to run (verify before building on it)
 
 ```powershell
-# Infra (Qdrant on :6333)
+# Infra (Qdrant on :6333) — Docker Desktop must be running first
+docker compose -f infra/docker-compose.yaml up -d
 docker compose -f infra/docker-compose.yaml ps
 
 # Backend — restart REQUIRED after any Docker restart (lru_cached QdrantClient)
@@ -58,35 +48,43 @@ uv run --no-sync uvicorn finrag.main:app --reload --port 8000   # see gotcha #2 
 cd D:\FinRAG\frontend
 npm run dev          # http://localhost:3000
 
-# Fast agent sanity (no server): runs the graph directly
-$env:PYTHONIOENCODING="utf-8"; uv run --no-sync python -m finrag.agent.graph
+# Eval harness (Day 4) — Qdrant must be up for narrative/vector cases
+cd D:\FinRAG\backend
+$env:PYTHONIOENCODING="utf-8"
+uv run --no-sync python -m finrag.eval.harness            # full 30-Q on Claude
+uv run --no-sync python -m finrag.eval.harness --smoke    # 1 per tier (cheap)
+uv run --no-sync python -m finrag.eval.harness --no-judge # deterministic only (free)
+
+# Local edge model (Day 5) — CPU-pinned Ollama must be up first (gotcha #9)
+$env:LOCAL_USE_TOOLS="true"  # "false" = degraded synthesis-only mode
+uv run --no-sync python -m finrag.eval.harness --provider local --out ..\data\eval_results_local_tools.json
 ```
 
 Canaries (must stay true):
 - `How did Apple's services revenue change in fiscal 2023?` → **+$7.1B / +9% (~$85.2B)** from vector chunks, cited. NOT $383.285B.
 - `What was Apple's net income in fiscal 2023?` → **$96.995B** via `sql_query`.
+- Eval: `--smoke` should pass factual (✓), narrative (cites, faithful), multihop (✓), honesty (declines).
 
 ## Final provider state
 
-`llm_provider="anthropic"`, `CLAUDE_MODEL="claude-sonnet-4-6"`. Gemini (`gemini-2.5-flash-lite`) stays fully wired behind the seam — flip `llm_provider=gemini` for the Day-4 A/B. The Anthropic key in `D:\FinRAG\.env` is funded. ~$0.04/agent question on Claude. **Why we left Gemini:** free tier = 20 req/DAY/model (an agent burns ~5/question) + flash-lite `MALFORMED_FUNCTION_CALL`. Full story in day3.md.
-
-## Parked / known-open (not blocking Day 4)
-
-1. **Prompt-cache read not landing in the tool-loop** (day3.md bug 18): `cache_read_input_tokens` stays 0; the write lands on the final call. Cost-only, correctness unaffected. Likely fix: add a `cache_control` breakpoint on the **tools** block (currently only `system` is marked in `claude.py:_cached_system`). Worth a focused 30-min look before Day 5 deploy, or fold into the A/B cost numbers.
+`llm_provider="anthropic"`, `CLAUDE_MODEL="claude-sonnet-4-6"`. **Three** providers now sit behind the seam, all selected live via `settings.llm_provider`: `anthropic` (default), `gemini` (`gemini-2.5-flash-lite`), and `local` (`llama3.2:3b` via Ollama — Day 5). The harness flips provider per-run with `--provider`. Anthropic key in `D:\FinRAG\.env` is funded; ~$0.04/agent question + ~$0.39 for a full 30-Q eval. Local runs are $0 (generation) but the Claude judge still bills ~$0.30–0.50/30-Q.
 
 ## Gotchas (carry forward — these bit us)
 
-1. **Windows console cp1252** can't print unicode (`↳ ▸`) → run scripts with `PYTHONIOENCODING=utf-8`.
-2. **`uv` websockets lock**: a running uvicorn holds `.venv/.../websockets/speedups.pyd`; `uv run`'s pre-sync then fails (`Access is denied`). Use `uv run --no-sync` while the server is up, or stop the backend first; `UV_LINK_MODE=copy` helps. A clean `uv sync` (backend stopped) repairs the half-written `websockets` dist-info warnings.
-3. **Restart uvicorn whenever Docker restarts** (lru_cached QdrantClient holds a dead connection).
-4. **Don't run `npm run dev` on top of a `next build`** — dev serves mismatched hashed chunks (unstyled page, dead button). `rm -rf .next` then `npm run dev` (day3.md bug 19).
+1. **Windows console cp1252** can't print unicode (`↳ ▸ ✓`) → run scripts with `PYTHONIOENCODING=utf-8`.
+2. **`uv` websockets lock**: a running uvicorn holds `.venv/.../websockets/speedups.pyd`; `uv run`'s pre-sync then fails. Use `uv run --no-sync` while the server is up. (`--no-sync` warns "no effect outside a project" when run from repo root — run eval/uv commands from `backend/`.)
+3. **Restart uvicorn whenever Docker restarts** (lru_cached QdrantClient holds a dead connection). Same after any `nodes.py`/prompt change.
+4. **Don't run `npm run dev` on top of a `next build`** — dev serves mismatched chunks (unstyled page). `rm -rf .next` then `npm run dev`. Use `tsc --noEmit` to typecheck, not `next build`.
 5. **`.env` is at repo root** `D:\FinRAG\.env` (not backend/).
-6. **smoke.py is retrieval-only** — it will not catch a structured-value bug (that's how the 2-year fact mislabel survived Day 2; day3.md bug 15).
+6. **Run eval/python from `backend/`**, not repo root, or you get `ModuleNotFoundError: No module named 'finrag'`.
+7. **Docker Desktop is a GUI app** — if the daemon is down, it must be started manually (the npipe error means it's not running); then `docker compose up -d`.
+8. **Eval cost/quota**: a full 30-Q Claude run ≈ $0.39 and a few minutes (run in background). Gemini free tier = 20 req/day/model — an agent burns ~5–6/question, so only ~2–3 questions fit before 429s.
+9. **Local Llama on a 4GB GPU CRASHES the machine.** `llama3.2:3b` loads at 2.9GB VRAM on the GTX 1650 Ti (4GB total) → desktop load tips it over → NVIDIA driver TDR → full reboot. **Always pin Ollama to CPU for local runs:** stop the desktop tray app + server, then `$env:CUDA_VISIBLE_DEVICES="-1"; $env:OLLAMA_KEEP_ALIVE="3m"; $env:OLLAMA_NUM_PARALLEL="1"; ollama serve`. Verify `ollama ps` shows `100% CPU`. CPU is slow (~50–96s/question) but stable.
 
 ## Working mode (load-bearing)
 
-Explain-while-implementing: write the code, annotate the *why*, don't punt to the user. They're time-constrained — keep responses tight; go deep only on genuinely conceptual moments. If they say "let me try this one," flip to pure-guide for that step.
+Explain-while-implementing: write the code, annotate the *why*, keep responses tight (the user is time-constrained). Default to **guide, not implement** unless explicitly asked to write code — but once asked, build and verify. If they say "let me try this one," flip to pure-guide for that step. Ask before changes that affect the live app or cost money.
 
 ## Conventions
 
-- `docs/day4.md` is written at the **end** of Day 4 (mirrors day1–3). This handoff.md is the live checkpoint. Don't touch `PLAN.md` or `docs/resume.md` (gitignored, personal). Don't `git commit` unless asked. **LangGraph only — no LangChain.**
+- `docs/dayN.md` written at the **end** of each day (day4.md is current). This handoff.md is the live checkpoint. Don't touch `PLAN.md` or `docs/resume.md` (gitignored, personal). **Don't `git commit` unless asked.** **LangGraph only — no LangChain** (Ragas was rejected on Day 4 to keep `langchain_core` out of the tree; the eval harness is hand-rolled).

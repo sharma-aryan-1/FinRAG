@@ -1,0 +1,156 @@
+{
+  "provider": "local",
+  "aggregate": {
+    "overall": {
+      "n": 4,
+      "errors": 0,
+      "accuracy": 0.6666666666666666,
+      "route_match": 0.75,
+      "citation_valid": 0.0,
+      "faithfulness": null,
+      "relevance": null,
+      "context_precision": null,
+      "avg_latency_ms": 22284
+    },
+    "by_tier": {
+      "factual": {
+        "n": 1,
+        "errors": 0,
+        "accuracy": 1.0,
+        "route_match": 1.0,
+        "citation_valid": null,
+        "faithfulness": null,
+        "relevance": null,
+        "context_precision": null,
+        "avg_latency_ms": 20149
+      },
+      "honesty": {
+        "n": 1,
+        "errors": 0,
+        "accuracy": 1.0,
+        "route_match": 1.0,
+        "citation_valid": null,
+        "faithfulness": null,
+        "relevance": null,
+        "context_precision": null,
+        "avg_latency_ms": 17500
+      },
+      "multihop": {
+        "n": 1,
+        "errors": 0,
+        "accuracy": 0.0,
+        "route_match": 1.0,
+        "citation_valid": null,
+        "faithfulness": null,
+        "relevance": null,
+        "context_precision": null,
+        "avg_latency_ms": 18296
+      },
+      "narrative": {
+        "n": 1,
+        "errors": 0,
+        "accuracy": null,
+        "route_match": 0.0,
+        "citation_valid": 0.0,
+        "faithfulness": null,
+        "relevance": null,
+        "context_precision": null,
+        "avg_latency_ms": 33194
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "f01",
+      "tier": "factual",
+      "question": "What was Apple's net income in fiscal 2023?",
+      "route_expected": "sql",
+      "route_actual": "sql",
+      "answer": "Apple Inc.'s net income for fiscal year 2023 was $96,995,000,000.",
+      "n_chunks": 0,
+      "n_tool_calls": 1,
+      "latency_ms": 20149,
+      "input_tokens": 1695,
+      "output_tokens": 51,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": null,
+      "relevance": null,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u22489.7e+10 (currency)"
+      ],
+      "error": null
+    },
+    {
+      "id": "n01",
+      "tier": "narrative",
+      "question": "How does Apple describe the risks to its supply chain in its 10-K?",
+      "route_expected": "vector",
+      "route_actual": "both",
+      "answer": "The text highlights several risks that Apple Inc. (AAPL) faces, including:\n\n1. **Cybersecurity Risks**: Malicious attacks on its systems to gain unauthorized access to confidential information or disrupt business operations.\n2. **Retail Operations Risks**: Factors such as macro-economic conditions, retail activity, and relationships with partners can impact the Company's business and financial condition.\n3. **Legal and Regulatory Compliance Risks**: Unfavorable results of legal proceedings or government investigations could adversely impact the Company's business and financial condition.\n4. **Interest Rate Risk**: Fluctuations in U.S. interest rates can affect the fair value of its investment portfolio and increase interest expense on term debt.\n5. **Foreign Exchange Rate Risk**: Changes in foreign currency exchange rates can impact gross margins on products sold in foreign countries and on products that include components from foreign suppliers.\n\nThese risks are significant because they can have a material impact on Apple's business, financial condition, and stock price. The Company uses various strategies to manage these risks, but they may still affect its consolidated financial statements.\n\nThe text also highlights the following:\n\n* The Company experiences higher net sales in its first quarter due to seasonal holiday demand.\n* New product and service introductions can significantly impact net sales, cost of sales, and operating expenses.\n* The Company generates a significant portion of its net sales from a single product, making it vulnerable to changes in demand for that product.\n\nOverall, the text suggests that Apple Inc. faces a range of risks that require careful management and mitigation to protect its business and financial condition.",
+      "n_chunks": 8,
+      "n_tool_calls": 0,
+      "latency_ms": 33194,
+      "input_tokens": 1026,
+      "output_tokens": 318,
+      "correct": null,
+      "route_match": false,
+      "citation_valid": false,
+      "faithfulness": null,
+      "relevance": null,
+      "context_precision": null,
+      "declined": null,
+      "notes": [],
+      "error": null
+    },
+    {
+      "id": "m01",
+      "tier": "multihop",
+      "question": "By what percentage did Apple's net income change from fiscal 2022 to fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Apple Inc.'s net income for 2022 was $99,803,000,000 and for 2023 was $96,950,000,000.",
+      "n_chunks": 0,
+      "n_tool_calls": 1,
+      "latency_ms": 18296,
+      "input_tokens": 1738,
+      "output_tokens": 65,
+      "correct": false,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": null,
+      "relevance": null,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u2248-2.814 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "h01",
+      "tier": "honesty",
+      "question": "What was Microsoft's net income in fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Microsoft's net income for 2023 is not available in the provided context or tools. The sql_query tool did not return any results, and the calculator tool is not applicable in this case as there are no figures to calculate.",
+      "n_chunks": 0,
+      "n_tool_calls": 1,
+      "latency_ms": 17500,
+      "input_tokens": 1657,
+      "output_tokens": 70,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": null,
+      "relevance": null,
+      "context_precision": null,
+      "declined": true,
+      "notes": [],
+      "error": null
+    }
+  ]
+}

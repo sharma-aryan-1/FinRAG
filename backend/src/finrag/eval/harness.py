@@ -31,7 +31,7 @@ OUT_DIR = REPO_ROOT / "data"
 # Rough public list prices ($/M tokens) for an order-of-magnitude cost number.
 # We only have the agent node's tokens (the plan call's usage isn't threaded
 # into state), so this is a floor, labelled as such in the report.
-_RATES = {"anthropic": (3.0, 15.0), "gemini": (0.10, 0.40)}
+_RATES = {"anthropic": (3.0, 15.0), "gemini": (0.10, 0.40), "local": (0.0, 0.0)}
 
 
 @dataclass
@@ -224,7 +224,16 @@ def print_report(provider: str, results: list[CaseResult], agg: dict) -> None:
           f"{_fmt(o['citation_valid']):6} {_fmt(o['faithfulness']):6} "
           f"{_fmt(o['relevance']):6} {_fmt(o['context_precision']):6}")
     print(f"\n  errors={o['errors']}  agent-tokens in={in_tok} out={out_tok}  "
-          f"approx-cost=${cost:.3f} (agent node only; excludes plan call)\n")
+          f"approx-cost=${cost:.3f} (agent node only; excludes plan call)")
+    # tokens/sec is the edge-relevant throughput number for the local model.
+    # Derived from wall-clock latency (no separate decode timer), so it's a
+    # coarse end-to-end rate, not a pure-decode tok/s.
+    total_ms = sum(r.latency_ms for r in results)
+    if provider == "local" and total_ms:
+        print(f"  local throughput≈{out_tok / (total_ms / 1000):.1f} output tok/s "
+              f"(end-to-end, over {total_ms/1000:.1f}s wall)\n")
+    else:
+        print()
 
 
 def main() -> int:
