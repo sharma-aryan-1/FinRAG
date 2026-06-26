@@ -1,0 +1,200 @@
+{
+  "provider": "anthropic",
+  "aggregate": {
+    "overall": {
+      "n": 7,
+      "errors": 0,
+      "accuracy": 1.0,
+      "route_match": 1.0,
+      "citation_valid": null,
+      "faithfulness": 0.9714285714285714,
+      "relevance": 1.0,
+      "context_precision": null,
+      "avg_latency_ms": 10147
+    },
+    "by_tier": {
+      "multihop": {
+        "n": 7,
+        "errors": 0,
+        "accuracy": 1.0,
+        "route_match": 1.0,
+        "citation_valid": null,
+        "faithfulness": 0.9714285714285714,
+        "relevance": 1.0,
+        "context_precision": null,
+        "avg_latency_ms": 10147
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "m01",
+      "tier": "multihop",
+      "question": "By what percentage did Apple's net income change from fiscal 2022 to fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Here are Apple Inc.'s net income figures and the year-over-year change:\n\n| Fiscal Year | Net Income |\n|-------------|------------|\n| FY 2022 | $99,803,000,000 |\n| FY 2023 | $96,995,000,000 |\n\n**Percentage Change: \u20132.81%**\n\nApple's net income declined by approximately **2.81%** from FY 2022 to FY 2023, falling by ~$2.808 billion.",
+      "n_chunks": 0,
+      "n_tool_calls": 2,
+      "latency_ms": 9928,
+      "input_tokens": 1643,
+      "output_tokens": 269,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u2248-2.814 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "m02",
+      "tier": "multihop",
+      "question": "By what percentage did Tesla's revenue grow from fiscal 2023 to fiscal 2024?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Here are Tesla's total revenue figures and the year-over-year growth:\n\n| Fiscal Year | Total Revenue |\n|-------------|--------------|\n| FY 2023 | $96,773,000,000 |\n| FY 2024 | $97,690,000,000 |\n\n**Year-over-Year Growth: ~0.95%**\n\nTesla's total revenue grew by approximately **0.95%** from FY 2023 to FY 2024, increasing by $917 million ($97.69B vs. $96.77B). This represents a near-flat revenue trajectory between the two fiscal years.",
+      "n_chunks": 0,
+      "n_tool_calls": 2,
+      "latency_ms": 9752,
+      "input_tokens": 1715,
+      "output_tokens": 292,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u22480.9476 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "m03",
+      "tier": "multihop",
+      "question": "What was Apple's gross margin in fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Here are Apple Inc.'s gross margin figures for **fiscal year 2023** (fiscal year ending September 2023), as reported in its 10-K:\n\n| Metric | FY 2023 |\n|---|---|\n| **Revenue** | $383,285,000,000 |\n| **Cost of Revenue** | $214,137,000,000 |\n| **Gross Profit** | $169,148,000,000 |\n| **Gross Margin** | **44.13%** |\n\n**Key takeaway:** Apple's gross margin for FY2023 was approximately **44.1%**, calculated as gross profit ($169.148B) divided by total revenue ($383.285B).",
+      "n_chunks": 0,
+      "n_tool_calls": 3,
+      "latency_ms": 13710,
+      "input_tokens": 2230,
+      "output_tokens": 354,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u224844.13 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "m04",
+      "tier": "multihop",
+      "question": "What was Tesla's net profit margin in fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "**Tesla Inc. \u2014 Net Profit Margin, Fiscal Year 2023**\n\n| Metric | Value |\n|---|---|\n| Total Revenue | $96,773,000,000 |\n| Net Income | $14,997,000,000 |\n| **Net Profit Margin** | **~15.50%** |\n\nTesla's net profit margin for fiscal year 2023 was approximately **15.50%**, calculated as net income of $14,997,000,000 divided by total revenue of $96,773,000,000.",
+      "n_chunks": 0,
+      "n_tool_calls": 2,
+      "latency_ms": 8596,
+      "input_tokens": 1635,
+      "output_tokens": 262,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u224815.5 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "m05",
+      "tier": "multihop",
+      "question": "What was Apple's operating margin in fiscal 2024?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "**Apple Inc. Operating Margin \u2014 Fiscal Year 2024**\n\n| Metric | Value |\n|---|---|\n| Revenue | $391,035,000,000 |\n| Operating Income | $123,216,000,000 |\n| **Operating Margin** | **~31.51%** |\n\nApple's operating margin for fiscal year 2024 (ending late September 2024) was approximately **31.51%**, calculated as operating income of $123.216 billion divided by revenue of $391.035 billion.",
+      "n_chunks": 0,
+      "n_tool_calls": 2,
+      "latency_ms": 9144,
+      "input_tokens": 1640,
+      "output_tokens": 257,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u224831.51 (percent)"
+      ],
+      "error": null
+    },
+    {
+      "id": "m06",
+      "tier": "multihop",
+      "question": "Which of the three companies had the highest net income in fiscal 2023?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Here are the **fiscal year 2023 net income** figures for all three companies:\n\n| Company | Net Income (FY2023) |\n|---|---|\n| **Apple Inc. (AAPL)** | $96,995,000,000 (~$97.0B) |\n| **JPMorgan Chase & Co. (JPM)** | $49,552,000,000 (~$49.6B) |\n| **Tesla, Inc. (TSLA)** | $14,997,000,000 (~$15.0B) |\n\n**Key observations:**\n- **Apple** led the group by a wide margin, with net income nearly **double** that of JPMorgan Chase.\n- **JPMorgan Chase** ranked second at ~$49.6B.\n- **Tesla** posted the lowest net income of the three at ~$15.0B.\n\n> **Note on fiscal years:** Apple's fiscal year 2023 ended in late September 2023, while JPMorgan Chase's and Tesla's fiscal years align with the calendar year (ending December 31, 2023).",
+      "n_chunks": 0,
+      "n_tool_calls": 1,
+      "latency_ms": 10229,
+      "input_tokens": 1062,
+      "output_tokens": 338,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 0.8,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expect substring 'Apple'",
+        "unsupported: [\"Apple's fiscal year 2023 ended in late September 2023\", \"JPMorgan Chase's and Tesla's fiscal years align with the calendar year (ending December 31, 2023)\", \"Apple's net income was nearly double that of JPMorgan Chase\"]"
+      ],
+      "error": null
+    },
+    {
+      "id": "m07",
+      "tier": "multihop",
+      "question": "By what percentage did JPMorgan's net income change from fiscal 2023 to fiscal 2024?",
+      "route_expected": null,
+      "route_actual": "sql",
+      "answer": "Here are JPMorgan Chase's net income figures and the year-over-year change:\n\n| Fiscal Year | Net Income |\n|-------------|------------|\n| FY 2023 | $49,552,000,000 |\n| FY 2024 | $58,471,000,000 |\n\n**Percentage Change: +18.00%**\n\nJPMorgan Chase's net income grew by approximately **18.00%** from FY 2023 to FY 2024, increasing by **$8,919,000,000**.",
+      "n_chunks": 0,
+      "n_tool_calls": 2,
+      "latency_ms": 9675,
+      "input_tokens": 1648,
+      "output_tokens": 279,
+      "correct": true,
+      "route_match": true,
+      "citation_valid": null,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "context_precision": null,
+      "declined": null,
+      "notes": [
+        "expected\u224818 (percent)"
+      ],
+      "error": null
+    }
+  ]
+}

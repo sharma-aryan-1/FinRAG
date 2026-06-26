@@ -89,6 +89,7 @@ Rules:
 4. Quote exact figures; never round unless asked.
 5. Be careful with fiscal vs calendar year (Apple's fiscal year ends in late September).
 6. Be concise — match the question's scope.
+7. Do not embellish. State only what the context or tool results actually support. Do not add provenance you cannot see (e.g. "as disclosed in the 10-K" when the figure came from the figures database), characterizations ("a record-setting profit", "strong performance"), or outside facts not present in the context/tool results. A correct figure with ungrounded commentary is still a faithfulness failure.
 """
 
 

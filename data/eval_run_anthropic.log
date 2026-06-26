@@ -1,0 +1,110 @@
+Running 30 cases · provider=anthropic · judge=True
+  [ 1/30] f01 factual   What was Apple's net income in fiscal 2023?…
+        → ✓  route=sql  8416ms
+  [ 2/30] f02 factual   What was Apple's total revenue in fiscal 2024?…
+        → ✓  route=sql  8612ms
+  [ 3/30] f03 factual   How much did Tesla spend on research and development i…
+        → ✓  route=sql  8033ms
+  [ 4/30] f04 factual   What were JPMorgan's total assets at the end of fiscal…
+        → ✓  route=sql  9043ms
+  [ 5/30] f05 factual   What was Apple's operating income in fiscal 2022?…
+        → ✓  route=sql  6707ms
+  [ 6/30] f06 factual   What was Tesla's total revenue in fiscal 2024?…
+        → ✓  route=sql  6293ms
+  [ 7/30] f07 factual   What was JPMorgan's net income in fiscal 2024?…
+        → ✓  route=sql  9341ms
+  [ 8/30] f08 factual   What was Apple's gross profit in fiscal 2023?…
+        → ✓  route=sql  14340ms
+  [ 9/30] f09 factual   What was Tesla's diluted earnings per share in fiscal …
+        → ✓  route=sql  11038ms
+  [10/30] f10 factual   What was JPMorgan's net interest income in fiscal 2024…
+        → ✓  route=sql  10371ms
+  [11/30] n01 narrative How does Apple describe the risks to its supply chain …
+        → ·  route=vector  22426ms
+  [12/30] n02 narrative What does Tesla say about competition in the electric-…
+        → ·  route=vector  19040ms
+  [13/30] n03 narrative How does JPMorgan describe credit risk in its filing?…
+        → ·  route=vector  18191ms
+  [14/30] n04 narrative How does Apple characterize its Services business and …
+        → ·  route=vector  33398ms
+  [15/30] n05 narrative What risks does Tesla cite related to its dependence o…
+        → ·  route=vector  17024ms
+  [16/30] n06 narrative How does Apple describe foreign-currency exchange-rate…
+        → ·  route=vector  18910ms
+  [17/30] n07 narrative What does Tesla say about risks in ramping production …
+        → ·  route=vector  20115ms
+  [18/30] n08 narrative How does JPMorgan describe the regulatory and capital …
+        → ·  route=vector  21508ms
+  [19/30] m01 multihop  By what percentage did Apple's net income change from …
+        → ✓  route=sql  10866ms
+  [20/30] m02 multihop  By what percentage did Tesla's revenue grow from fisca…
+        → ✓  route=sql  11298ms
+  [21/30] m03 multihop  What was Apple's gross margin in fiscal 2023?…
+        → ✓  route=sql  15632ms
+  [22/30] m04 multihop  What was Tesla's net profit margin in fiscal 2023?…
+        → ✓  route=sql  10211ms
+  [23/30] m05 multihop  What was Apple's operating margin in fiscal 2024?…
+        → ✓  route=sql  8929ms
+  [24/30] m06 multihop  Which of the three companies had the highest net incom…
+        → ✓  route=sql  15333ms
+  [25/30] m07 multihop  By what percentage did JPMorgan's net income change fr…
+        → ✓  route=sql  10374ms
+  [26/30] h01 honesty   What was Microsoft's net income in fiscal 2023?…
+        → ✓  route=sql  4409ms
+  [27/30] h02 honesty   What was Apple's total revenue in fiscal 2019?…
+        → ✓  route=sql  10073ms
+  [28/30] h03 honesty   How many employees does Amazon have according to its 1…
+        → ✓  route=vector  5579ms
+  [29/30] h04 honesty   What will Tesla's revenue be in fiscal 2026?…
+        → ✓  route=vector  13985ms
+  [30/30] h05 honesty   What was Google's operating margin in fiscal 2023?…
+        → ✓  route=sql  5111ms
+
+==============================================================================
+  EVAL REPORT — provider=anthropic  (30 cases)
+==============================================================================
+  case  tier      ok  route cite faith  rel    prec   ms    
+  ------------------------------------------------------------------------
+  f01   factual   ✓   ✓     –     0.75   1.00    –      8416
+  f02   factual   ✓   ✓     –     0.60   1.00    –      8612
+  f03   factual   ✓   ✓     –     0.50   1.00    –      8033
+  f04   factual   ✓   ✓     –     1.00   1.00    –      9043
+  f05   factual   ✓   ✓     –     0.67   1.00    –      6707
+  f06   factual   ✓   ✓     –     0.90   1.00    –      6293
+  f07   factual   ✓   ✓     –     0.60   1.00    –      9341
+  f08   factual   ✓   ✓     –     0.90   1.00    –     14340
+  f09   factual   ✓   ✓     –     0.75   1.00    –     11038
+  f10   factual   ✓   ✓     –     0.75   0.50    –     10371
+  n01   narrative ·   ✓     ✓     1.00   1.00   0.38   22426
+  n02   narrative ·   ✓     ✓     0.97   1.00   0.38   19040
+  n03   narrative ·   ✓     ✓     1.00   1.00   0.50   18191
+  n04   narrative ·   ✓     ✓     0.97   1.00   0.38   33398
+  n05   narrative ·   ✓     ✓     1.00   1.00   0.75   17024
+  n06   narrative ·   ✓     ✓     0.97   1.00   0.75   18910
+  n07   narrative ·   ✓     ✓     1.00   1.00   0.75   20115
+  n08   narrative ·   ✓     ✓     1.00   1.00   0.50   21508
+  m01   multihop  ✓   ✓     –     0.90   1.00    –     10866
+  m02   multihop  ✓   ✓     –     0.75   1.00    –     11298
+  m03   multihop  ✓   ✓     –     0.88   1.00    –     15632
+  m04   multihop  ✓   ✓     –     0.75   1.00    –     10211
+  m05   multihop  ✓   ✓     –     1.00   1.00    –      8929
+  m06   multihop  ✓   ✓     –     0.90   0.90    –     15333
+  m07   multihop  ✓   ✓     –     1.00   1.00    –     10374
+  h01   honesty   ✓   ✓     –      –      –      –      4409
+  h02   honesty   ✓   ✓     –      –      –      –     10073
+  h03   honesty   ✓   ✓     –      –      –      –      5579
+  h04   honesty   ✓   ✓     –      –      –      –     13985
+  h05   honesty   ✓   ✓     –      –      –      –      5111
+
+  TIER       n   acc    route  cite   faith  rel    prec  
+  ------------------------------------------------------------
+  factual     10  1.00   1.00    –     0.74   0.95    –   
+  honesty      5  1.00   1.00    –      –      –      –   
+  multihop     7  1.00   1.00    –     0.88   0.99    –   
+  narrative    8   –     1.00   1.00   0.99   1.00   0.55 
+  ------------------------------------------------------------
+  OVERALL     30  1.00   1.00   1.00   0.86   0.98   0.55 
+
+  errors=0  agent-tokens in=63032 out=13562  approx-cost=$0.393 (agent node only; excludes plan call)
+
+  wrote D:\FinRAG\data\eval_results_anthropic.json
