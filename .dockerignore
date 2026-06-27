@@ -1,0 +1,36 @@
+# Build context is the repo root (see backend/Dockerfile). Keep the image lean
+# and secret-free: ship only the backend source + the two runtime data artifacts.
+
+# Secrets — never bake keys into the image (use Fly secrets / env vars instead)
+.env
+.env.*
+!.env.example
+
+# Frontend deploys separately (Vercel)
+frontend/
+
+# Python / build cruft
+**/__pycache__/
+**/*.py[cod]
+backend/.venv/
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Heavy data NOT needed at runtime (offline ingestion inputs + eval outputs).
+# data/duckdb/ and data/bm25_index.pkl are intentionally NOT ignored — the
+# runtime needs them and the Dockerfile COPYs them explicitly.
+data/raw/
+data/processed/
+data/*.json
+data/eval_results_*.json
+data/smoke_results.json
+
+# Repo meta
+.git/
+.github/
+docs/
+*.md
+PLAN.md
+infra/

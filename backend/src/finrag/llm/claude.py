@@ -33,7 +33,18 @@ from finrag.llm.base import (
 )
 from finrag.retrieval.vector import RetrievedChunk
 
-CLAUDE_MODEL = "claude-sonnet-4-6"
+# Default (eval baseline) is Sonnet; the public deploy sets CLAUDE_MODEL=
+# claude-haiku-4-5-20251001 via env. Read through a helper so every call site
+# (synthesis, generate_text, tool-loop, stream) picks up the configured model
+# live — same pattern as the provider seam.
+def _claude_model() -> str:
+    return settings.claude_model or "claude-sonnet-4-6"
+
+
+# Back-compat alias for any module that imported the constant. Note: this binds
+# once at import; the live value is _claude_model(). Internal call sites use the
+# helper so an env override (prod Haiku) always takes effect.
+CLAUDE_MODEL = settings.claude_model or "claude-sonnet-4-6"
 
 # Statuses worth retrying: rate limit, transient server errors, overloaded.
 _RETRYABLE_STATUS = {429, 500, 503, 529}
@@ -88,7 +99,7 @@ def generate_text(
     """Single-shot text completion (planning, NL→SQL). Mirrors the Gemini
     backend's generate_text so the dispatcher can pick either."""
     resp = _messages_create_with_retry(
-        model=CLAUDE_MODEL,
+        model=_claude_model(),
         max_tokens=max_output_tokens,
         system=system_instruction,
         messages=[{"role": "user", "content": user_text}],
@@ -102,7 +113,7 @@ def synthesize_claude(question: str, chunks: list[RetrievedChunk]) -> SynthesisR
         return empty_result(CLAUDE_MODEL)
 
     response = _messages_create_with_retry(
-        model=CLAUDE_MODEL,
+        model=_claude_model(),
         max_tokens=MAX_TOKENS,
         system=_cached_system(SYSTEM_PROMPT),
         messages=[{"role": "user", "content": build_user_message(question, chunks)}],
@@ -111,7 +122,7 @@ def synthesize_claude(question: str, chunks: list[RetrievedChunk]) -> SynthesisR
     usage = response.usage
     return SynthesisResult(
         answer=answer_text,
-        model=CLAUDE_MODEL,
+        model=_claude_model(),
         input_tokens=usage.input_tokens,
         output_tokens=usage.output_tokens,
         cache_creation_input_tokens=getattr(usage, "cache_creation_input_tokens", 0) or 0,
@@ -153,7 +164,7 @@ def tool_loop(
 
     for _ in range(max_iters):
         resp = _messages_create_with_retry(
-            model=CLAUDE_MODEL,
+            model=_claude_model(),
             max_tokens=max_tokens,
             system=_cached_system(system),
             tools=tools,
@@ -197,7 +208,7 @@ def _stream_one_turn(*, tools, messages, system, max_tokens, on_text, retries: i
         emitted = False
         try:
             with get_anthropic_client().messages.stream(
-                model=CLAUDE_MODEL,
+                model=_claude_model(),
                 max_tokens=max_tokens,
                 system=system,
                 tools=tools,

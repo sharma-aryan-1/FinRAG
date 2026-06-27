@@ -19,7 +19,6 @@ dependencies = [
     "pydantic-settings>=2.14.1",
     "qdrant-client>=1.18.0",
     "rank-bm25>=0.2.2",
-    "unstructured[pdf]>=0.22.29",
 ]
 
 
@@ -32,6 +31,13 @@ dev = [
     "pytest>=9.0.3",
     "pytest-asyncio>=1.3.0",
     "ruff>=0.15.13",
+]
+# Offline ingestion only (parse.py). Pulls torch/transformers/onnxruntime via
+# unstructured[pdf] — multi-GB and slow — so it is deliberately OUT of the
+# runtime dependency set: the serving image (and `uv sync --no-dev`) skip it.
+# Build/refresh the corpus with:  uv sync --group ingestion
+ingestion = [
+    "unstructured[pdf]>=0.22.29",
 ]
 
   [tool.ruff]

@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -9,17 +9,18 @@ from pydantic import BaseModel, Field
 
 from finrag.agent import get_agent, run_agent
 from finrag.config import settings
+from finrag.guardrails import cap_status, enforce
 from finrag.llm import synthesize
 from finrag.retrieval.rerank import rerank_search
 from finrag.retrieval.vector import RetrievedChunk
 
 app = FastAPI(title="FinRAG", version="0.1.0")
 
-# Dev CORS: allow the Next.js dev server on :3000 to call us.
-# In prod, lock allow_origins to the deployed frontend's exact URL.
+# CORS allow-list comes from settings: dev defaults to the Next.js dev server;
+# the prod deploy sets ALLOWED_ORIGINS to the exact Vercel origin (docs/deploy.md).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=settings.allowed_origins_list,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
@@ -81,10 +82,15 @@ class AgentResponse(BaseModel):
 
 # ── Routes ────────────────────────────────────────────────────────────────
 @app.get("/health")
-def health() -> dict[str, str]:
+def health() -> dict[str, Any]:
+    """Liveness + observable guardrail state (so the cap is visible without
+    grepping logs, and the frontend can show 'N questions left today')."""
     return {
         "status": "ok",
         "llm_mode": settings.llm_mode,
+        "provider": settings.llm_provider,
+        "rate_limit_per_min": settings.rate_limit_per_min,
+        **cap_status(),
     }
 
 
@@ -105,7 +111,7 @@ def query(req: QueryRequest) -> QueryResponse:
     return QueryResponse(question=req.question, chunks=chunks)
 
 
-@app.post("/answer", response_model=AnswerResponse)
+@app.post("/answer", response_model=AnswerResponse, dependencies=[Depends(enforce)])
 def answer(req: AnswerRequest) -> AnswerResponse:
     """Retrieve top-K with the Day-2 funnel, then synthesize a grounded
     answer with Claude. Citations are returned as [N] inline references
@@ -138,7 +144,7 @@ def answer(req: AnswerRequest) -> AnswerResponse:
     )
 
 
-@app.post("/agent", response_model=AgentResponse)
+@app.post("/agent", response_model=AgentResponse, dependencies=[Depends(enforce)])
 def agent_endpoint(req: AnswerRequest) -> AgentResponse:
     """Run the LangGraph agent: plan → (retrieve) → tool-loop → synthesize.
 
@@ -164,7 +170,7 @@ def _sse(event: str, data: Any) -> str:
     return f"event: {event}\ndata: {json.dumps(jsonable_encoder(data))}\n\n"
 
 
-@app.post("/agent/stream")
+@app.post("/agent/stream", dependencies=[Depends(enforce)])
 def agent_stream(req: AnswerRequest) -> StreamingResponse:
     """Streaming twin of /agent (Server-Sent Events). The client watches the
     agent reason in real time:

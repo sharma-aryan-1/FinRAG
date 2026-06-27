@@ -18,8 +18,11 @@ from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel
-from unstructured.chunking.title import chunk_by_title
-from unstructured.partition.html import partition_html
+# NOTE: `unstructured` is imported lazily inside parse_filing() (see below), not
+# at module top. It's a heavy, ingestion-only dependency (torch/transformers via
+# unstructured[pdf]) kept OUT of the runtime image — but this module is imported
+# transitively at runtime for its constants (PROCESSED_DIR, Chunk), so a top-level
+# import would crash the server. Install it for ingestion with `uv sync --group ingestion`.
 
 # ── Paths ─────────────────────────────────────────────────────────────────
 # parse.py → ingestion/ → finrag/ → src/ → backend/ → ROOT
@@ -97,6 +100,17 @@ def _table_text(el: Any) -> str:
 # ── Core ──────────────────────────────────────────────────────────────────
 def parse_filing(filing_dir: Path) -> list[Chunk]:
     """Read a filing directory, return chunks ready for embedding."""
+    # Lazy import: keeps `unstructured` out of the runtime import path (it's only
+    # needed here, during offline ingestion). Clear hint if the group is missing.
+    try:
+        from unstructured.chunking.title import chunk_by_title
+        from unstructured.partition.html import partition_html
+    except ModuleNotFoundError as e:  # pragma: no cover
+        raise ModuleNotFoundError(
+            "Ingestion requires the 'unstructured' extra. Install it with "
+            "`uv sync --group ingestion` (it's excluded from the runtime image)."
+        ) from e
+
     meta = _load_filing_metadata(filing_dir)
     htm_path = filing_dir / "filing.htm"
 
