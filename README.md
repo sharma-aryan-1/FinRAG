@@ -204,8 +204,7 @@ FinRAG/
 │   ├── day2.md                          # Day 2 reference (full funnel + DuckDB + UI)
 │   ├── day3.md                          # Day 3 reference (agent + tools + streaming + trace UI)
 │   ├── day4.md                          # Day 4 reference (eval harness + judge + provider A/B)
-│   ├── day5.md                          # Day 5 reference (local edge variant + tool-loop A/B)
-│   └── demo.md                          # scripted demo runbook (3 questions + what to show)
+│   └── day5.md                          # Day 5 reference (local edge variant + tool-loop A/B)
 │
 ├── infra/
 │   └── docker-compose.yaml              # Qdrant
