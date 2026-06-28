@@ -6,7 +6,7 @@ colorTo: indigo
 sdk: docker
 app_port: 8000
 pinned: false
-short_description: Agentic RAG over SEC 10-K filings — cost-capped public demo backend
+short_description: Agentic RAG over SEC 10-K filings — cost-capped demo
 ---
 
 # FinRAG — backend (Hugging Face Space)

@@ -3,11 +3,22 @@
 import { useState } from 'react';
 import { ChatPane } from '@/components/ChatPane';
 import { CitationViewer } from '@/components/CitationViewer';
+import { Sidebar } from '@/components/Sidebar';
+import { useConversations } from '@/lib/conversations';
 import { streamAgent } from '@/lib/api';
 import { AgentDone, ChatMessage, RetrievedChunk, TraceEvent } from '@/lib/types';
 
 export default function Page() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const {
+    conversations,
+    activeId,
+    activeMessages,
+    newConversation,
+    ensureActive,
+    selectConversation,
+    deleteConversation,
+    updateMessages,
+  } = useConversations();
   const [selectedChunk, setSelectedChunk] = useState<RetrievedChunk | null>(null);
   // The citation pane is closed by default; opening is an explicit act (clicking
   // a source), so the chat gets the full width until the user wants provenance.
@@ -18,7 +29,17 @@ export default function Page() {
     setPanelOpen(true);
   }
 
+  // Starting a fresh chat also closes any open citation pane.
+  function startNewChat() {
+    newConversation();
+    setPanelOpen(false);
+    setSelectedChunk(null);
+  }
+
   async function handleAsk(question: string) {
+    // Pin this run to the conversation active at ask-time, so streaming patches
+    // land on the right chat even if the user switches conversations mid-answer.
+    const convId = ensureActive();
     const userMsg: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -32,11 +53,11 @@ export default function Page() {
       loading: true,
       trace: [],
     };
-    setMessages((prev) => [...prev, userMsg, sysMsg]);
+    updateMessages(convId, (prev) => [...prev, userMsg, sysMsg]);
 
     // Patch just this run's system message as events stream in.
     const patch = (fn: (m: ChatMessage) => ChatMessage) =>
-      setMessages((prev) => prev.map((m) => (m.id === sysId ? fn(m) : m)));
+      updateMessages(convId, (prev) => prev.map((m) => (m.id === sysId ? fn(m) : m)));
 
     try {
       await streamAgent(question, (event, data) => {
@@ -111,21 +132,33 @@ export default function Page() {
   return (
     <main className="h-screen flex flex-col bg-neutral-50 dark:bg-neutral-900">
       <header className="border-b border-neutral-200 dark:border-neutral-800 px-6 py-3 flex items-center justify-between bg-white/80 dark:bg-neutral-900/80 backdrop-blur">
-        <div className="flex items-center gap-2 font-mono">
+        <button
+          onClick={startNewChat}
+          aria-label="New chat"
+          title="New chat"
+          className="flex items-center gap-2 font-mono rounded-md -mx-1 px-1 py-0.5 hover:opacity-80 transition cursor-pointer"
+        >
           <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_8px] shadow-lime-400/60" />
           <span className="text-sm font-medium tracking-tight text-neutral-900 dark:text-neutral-50">
             finrag<span className="text-lime-500 dark:text-lime-400">.ai</span>
           </span>
-        </div>
+        </button>
         <div className="hidden sm:block font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400">
           SEC 10-K AGENT · PLAN → RETRIEVE → TOOLS → ANSWER
         </div>
       </header>
 
       <div className="flex-1 min-h-0 flex overflow-hidden">
+        <Sidebar
+          conversations={conversations}
+          activeId={activeId}
+          onNew={startNewChat}
+          onSelect={selectConversation}
+          onDelete={deleteConversation}
+        />
         <div className="flex-1 min-w-0">
           <ChatPane
-            messages={messages}
+            messages={activeMessages}
             onAsk={handleAsk}
             selectedChunkId={panelOpen ? selectedChunk?.chunk_id ?? null : null}
             onChunkSelect={openCitation}

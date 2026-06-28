@@ -91,11 +91,16 @@ def enforce(request: Request) -> None:
             )
 
         # ── per-IP sliding window ──
+        # A limit <= 0 means "no per-IP cap" (the daily cap is the real circuit
+        # breaker). Guarding here also keeps bucket[0] below safe: we only reach
+        # it when limit > 0 and the bucket is already at/over that limit, so it
+        # can never be empty.
+        limit = settings.rate_limit_per_min
         bucket = _hits[ip]
         cutoff = now - _WINDOW_SECONDS
         while bucket and bucket[0] < cutoff:
             bucket.popleft()
-        if len(bucket) >= settings.rate_limit_per_min:
+        if limit > 0 and len(bucket) >= limit:
             retry = max(1, int(_WINDOW_SECONDS - (now - bucket[0])))
             raise HTTPException(
                 status_code=429,
