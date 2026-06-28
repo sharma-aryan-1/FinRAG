@@ -36,3 +36,8 @@ backend/.env
 .claude/
 PLAN.md
 docs/resume.md
+.vercel
+
+# deploy artifacts — the Hugging Face Space is its own git repo cloned in here
+# (duplicated backend + LFS data + a token in its .git/config); never commit it.
+finrag-api/

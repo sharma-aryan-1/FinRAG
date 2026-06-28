@@ -10,9 +10,32 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'sw
 const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-serif', display: 'swap' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
+// metadataBase makes relative OG/Twitter URLs absolute and is what lets the link
+// unfurl into a proper preview card when shared (LinkedIn, Slack, iMessage).
+const SITE_URL = 'https://finrag-front.vercel.app';
+const TITLE = 'FinRAG — Agentic RAG over SEC 10-K filings';
+const DESCRIPTION =
+  'An agentic RAG system over SEC 10-K filings: hybrid retrieval, cross-encoder reranking, ' +
+  'DuckDB structured-data fusion, and a streamed LangGraph agent. Built by Aryan Sharma.';
+
 export const metadata: Metadata = {
-  title: 'FinRAG',
-  description: 'Agentic RAG over SEC 10-K filings',
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  authors: [{ name: 'Aryan Sharma', url: 'https://www.linkedin.com/in/sharmaaryan25/' }],
+  creator: 'Aryan Sharma',
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: 'FinRAG',
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary',
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

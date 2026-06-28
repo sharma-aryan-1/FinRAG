@@ -1,6 +1,10 @@
 # FinRAG
 
+**[▶ Live demo](https://finrag-front.vercel.app/)** &nbsp;·&nbsp; built by [Aryan Sharma](https://www.linkedin.com/in/sharmaaryan25/)
+
 An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder reranking, structured-data fusion via DuckDB, and a split-pane citation UI, built from the ground up to demonstrate production ML engineering.
+
+> The live demo runs the agent on **Claude Haiku 4.5** behind cost guardrails (per-IP rate limit + a global daily question cap) on a free Hugging Face Space — so a public URL can't run up the bill. It sleeps after extended idle; the first request wakes it (~tens of seconds). For unlimited use and the full Sonnet-grade eval numbers, run it locally (below).
 
 > All five days of the build are complete: retrieval, the structured-data side, the agent layer (LangGraph + Claude tool use + streamed trace UI), a tier-stratified **evaluation harness** with an LLM-judge, and a local **edge-inference variant** (Llama 3.2 3B) benchmarked against the cloud agent. See [What the eval proves](#what-the-eval-proves) and the [Roadmap](#roadmap).
 
@@ -239,7 +243,7 @@ FinRAG/
 └── data/                                # gitignored; populated by ingestion scripts
     ├── raw/                             # downloaded 10-K HTML + metadata
     ├── processed/                       # *.jsonl chunks
-    ├── bm25_index.pkl                   # ~25 MB pickle
+    ├── bm25_index.pkl                   # ~3.4 MB pickle
     └── duckdb/finrag.duckdb             # structured facts
 ```
 

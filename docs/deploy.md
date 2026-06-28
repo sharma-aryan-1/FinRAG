@@ -21,7 +21,7 @@ A cost-capped public demo: **Vercel** (frontend) → **Hugging Face Space** (Doc
 
 ## Prerequisites
 - Accounts: [Hugging Face](https://huggingface.co), [Vercel](https://vercel.com), [Qdrant Cloud](https://cloud.qdrant.io) (all free).
-- Local tools: `git` + **`git-lfs`** (`git lfs install` — needed for the 25MB BM25 pickle), `vercel` CLI (`npm i -g vercel`).
+- Local tools: `git` + **`git-lfs`** (`git lfs install` — needed for the BM25 pickle + DuckDB binaries), `vercel` CLI (`npm i -g vercel`).
 - A funded **Anthropic** key and a **Cohere** key.
 - The data layer already built (`data/duckdb/finrag.duckdb`, `data/bm25_index.pkl` present).
 
