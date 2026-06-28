@@ -69,7 +69,7 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 | Layer | Choice | Why |
 |---|---|---|
 | Embeddings | Cohere `embed-english-v3.0`, 1024-dim | Asymmetric retrieval, separate document/query encoders. Production-grade for finance text. |
-| Vector store | Qdrant v1.18 (Docker) | Native hybrid roadmap, payload filtering, fast Rust core, free self-host |
+| Vector store | Qdrant (Docker server in dev, embedded on-disk in the deploy image) | Payload filtering, fast Rust core; embedded mode bakes the vectors into the image, so the public demo has no external cluster to provision or idle-wipe |
 | Lexical retrieval | `rank_bm25` (BM25Okapi) | Catches exact-match signal that dense embeddings lose (years, tickers, GAAP jargon) |
 | Fusion | Reciprocal Rank Fusion, k=60 | Calibration-free combination of incompatible score scales |
 | Reranking | Cohere Rerank v3 | Cross-encoder over fused top-50 → top-K; fixes entity-disambiguation failures |
@@ -126,14 +126,24 @@ A 3B model can't read an exact 12-digit figure out of prose, but it *can* reliab
 
 ---
 
+## Deployment
+
+The [live demo](https://finrag-front.vercel.app/) is a **self-contained, cost-capped** deploy (full runbook: [`docs/deploy.md`](./docs/deploy.md)):
+
+- **Fully baked image**: the embedded Qdrant vector store, DuckDB facts, and BM25 index all ship *inside* one Docker image. No external vector cluster, so there's nothing to provision or idle-wipe; a cold link still works months later.
+- **Cost guardrails**: a per-IP rate limit plus a global daily question cap (`finrag/guardrails.py`) keep a public URL on a funded key from running up a bill; the agent runs on Claude Haiku 4.5 behind them. `/health` exposes the remaining daily quota.
+- **Host-portable**: one root `Dockerfile` (honors `$PORT`) runs unchanged on Hugging Face Spaces, Render, or Cloud Run; frontend on Vercel. The build excludes the multi-GB ingestion-only deps, trimming the runtime image from ~4 GB to 772 MB (incl. the baked-in vector store).
+
+---
+
 ## Quick start
 
 ### Prerequisites
 
-- Docker Desktop (for Qdrant)
+- Docker Desktop (for Qdrant in dev; the deploy uses the embedded store instead)
 - Python 3.11 + [uv](https://github.com/astral-sh/uv)
 - Node 18+ (Next.js dev server)
-- API keys for **Anthropic** (Day 3+) and **Cohere** (now)
+- API keys for **Anthropic** (the agent LLM) and **Cohere** (embeddings + Rerank v3)
 
 ### Setup
 
