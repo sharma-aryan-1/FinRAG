@@ -1,45 +1,51 @@
 # FinRAG — Public Deploy Runbook (Hugging Face Spaces)
 
-A cost-capped public demo: **Vercel** (frontend) → **Hugging Face Space** (Docker backend) → **Qdrant Cloud** (vectors). The agent runs on **Claude Haiku 4.5** behind guardrails (per-IP rate limit + a global daily question cap) so a public URL can't run up the Anthropic bill.
+A cost-capped public demo: **Vercel** (frontend) → **Hugging Face Space** (Docker backend), with **all retrieval data baked into the image** (embedded Qdrant + DuckDB + BM25). The agent runs on **Claude Haiku 4.5** behind guardrails (per-IP rate limit + a global daily question cap) so a public URL can't run up the Anthropic bill.
 
-> Why HF Spaces: free **16GB RAM** (no OOM — the agent loads the BM25 index + clients comfortably), builds from the same `Dockerfile`, and runs a **single replica** so the in-process daily cap stays a true global ceiling. Sleeps after ~48h idle, wakes on the next visit.
+> Why HF Spaces: free **16GB RAM** (no OOM — the agent loads the vector store + BM25 index + clients comfortably), builds from the same `Dockerfile`, and runs a **single replica** so the in-process daily cap stays a true global ceiling. Sleeps after ~48h idle, wakes on the next visit.
 
 ```
  Browser ──► Vercel (Next.js, NEXT_PUBLIC_API_BASE) ──► HF Space (FastAPI + guardrails)
-                                                          ├─► Qdrant Cloud (vectors)
-                                                          ├─► DuckDB + BM25 (in image)
-                                                          └─► Anthropic (Haiku) / Cohere
+                                                          ├─► Embedded Qdrant + DuckDB + BM25 (in image)
+                                                          └─► Anthropic (Haiku) / Cohere (query embed)
 ```
 
 ## Architecture facts that matter
 - **The daily cap is in-process** (`finrag/guardrails.py`). It's a true global ceiling because a free HF Space runs **one replica** — keep it that way (don't add replicas).
-- **Runtime data** = Qdrant Cloud (vectors) + `data/duckdb/finrag.duckdb` + `data/bm25_index.pkl` (baked into the image). The raw/processed corpus is *not* shipped.
+- **Runtime data is fully self-contained** = embedded Qdrant (`data/qdrant/`) + `data/duckdb/finrag.duckdb` + `data/bm25_index.pkl`, all baked into the image. No external vector cluster, so nothing idle-wipes. The raw/processed corpus is *not* shipped.
 - **Secrets never touch the repo** — they're HF Space *Secrets* (runtime env vars). The image build excludes `.env` via `.dockerignore`.
 - **Image is host-portable.** The root `Dockerfile` listens on `$PORT` (Render/Cloud Run) or 8000 (HF, via `app_port`). Nothing here is HF-locked.
 
 ---
 
 ## Prerequisites
-- Accounts: [Hugging Face](https://huggingface.co), [Vercel](https://vercel.com), [Qdrant Cloud](https://cloud.qdrant.io) (all free).
+- Accounts: [Hugging Face](https://huggingface.co), [Vercel](https://vercel.com) (both free). No Qdrant Cloud account needed — the vector store is embedded.
 - Local tools: `git` + **`git-lfs`** (`git lfs install` — needed for the BM25 pickle + DuckDB binaries), `vercel` CLI (`npm i -g vercel`).
 - A funded **Anthropic** key and a **Cohere** key.
 - The data layer already built (`data/duckdb/finrag.duckdb`, `data/bm25_index.pkl` present).
 
 ---
 
-## Step 1 — Qdrant Cloud (vectors)
+## Step 1 — Build the embedded vector store (baked into the image)
 
-1. Create a **free 1GB cluster**; copy its **URL** (include the port, e.g. `https://xxxx.cloud.qdrant.io:6333`) and an **API key**.
-2. Upload the corpus by re-embedding against the cloud cluster (small corpus, re-runs Cohere embed, ~**$0.09**):
+The vectors ship **inside the image** as an on-disk Qdrant store (`data/qdrant/`),
+alongside DuckDB + BM25. No external cluster, so nothing can idle-wipe the demo and
+there's no `QDRANT_URL`/`QDRANT_API_KEY` secret to manage. Setting `QDRANT_PATH`
+flips `make_qdrant_client()` (in `ingestion/embed.py`) from remote to embedded.
+
+Build it once locally (re-runs Cohere embed over the corpus, ~**$0.09**, ~10–15 min):
 
 ```powershell
 cd D:\FinRAG\backend
-$env:QDRANT_URL="https://xxxx.cloud.qdrant.io:6333"
-$env:QDRANT_API_KEY="<qdrant-key>"
+$env:QDRANT_PATH="./data/qdrant"     # resolves to D:\FinRAG\data\qdrant
 uv run --no-sync python -m finrag.ingestion.embed
 ```
 
-3. Confirm `finrag_chunks` has ~4,000 points (Qdrant Cloud dashboard). If it's 0, the upload didn't target the cloud URL — recheck the env vars (and the `:6333` port).
+The run ends with `... contains 4011 total (embedded ./data/qdrant).` Confirm the
+store exists at `D:\FinRAG\data\qdrant\` — the Dockerfile COPYs it into the image.
+
+> Dev still works against a remote/local-server Qdrant: just **don't** set
+> `QDRANT_PATH`, and it falls back to `QDRANT_URL` (the docker-compose cluster).
 
 ---
 
@@ -52,21 +58,24 @@ uv run --no-sync python -m finrag.ingestion.embed
 git clone https://huggingface.co/spaces/<user>/finrag-api
 cd finrag-api
 
-# From the FinRAG repo, copy: the Dockerfile, the backend package, the two data
-# artifacts, the .dockerignore, and the Space README (NOT the GitHub README).
+# From the FinRAG repo, copy: the Dockerfile, the backend package, the three data
+# artifacts (DuckDB, BM25, embedded Qdrant store), the .dockerignore, and the
+# Space README (NOT the GitHub README).
 copy D:\FinRAG\Dockerfile            .
 copy D:\FinRAG\.dockerignore         .
 copy D:\FinRAG\docs\hf-space-README.md  README.md
 robocopy D:\FinRAG\backend  backend  /E /XD .venv __pycache__ /XF "*.pyc"
 robocopy D:\FinRAG\data\duckdb  data\duckdb  /E
 copy D:\FinRAG\data\bm25_index.pkl   data\
+robocopy D:\FinRAG\data\qdrant  data\qdrant  /E /XF ".lock"   # skip the runtime lock
 
-# LFS for the pickle (HF requires LFS for files > 10MB)
+# LFS for the binaries HF won't take as plain blobs: the BM25 pickle, the DuckDB
+# file, and the embedded store's storage.sqlite (~48MB). meta.json stays plain text.
 git lfs install
-git lfs track "*.pkl"
+git lfs track "*.pkl" "*.duckdb" "*.sqlite"
 git add .gitattributes .
 
-git commit -m "FinRAG backend"
+git commit -m "FinRAG backend (embedded vector store)"
 git push
 ```
 
@@ -82,9 +91,11 @@ Space → **Settings → Variables and secrets**:
 
 **Secrets** (private, runtime env):
 - `ANTHROPIC_API_KEY` = your Anthropic key
-- `COHERE_API_KEY` = your Cohere key
-- `QDRANT_URL` = `https://xxxx.cloud.qdrant.io:6333`
-- `QDRANT_API_KEY` = your Qdrant key
+- `COHERE_API_KEY` = your Cohere key (still needed at runtime to embed the live query)
+
+> No `QDRANT_URL`/`QDRANT_API_KEY` — the vector store is embedded in the image.
+> `QDRANT_PATH=./data/qdrant` is already set in the Dockerfile, so there's nothing
+> Qdrant-related to configure on the Space.
 
 **Variables** (non-sensitive):
 - `LLM_PROVIDER` = `anthropic`
@@ -153,7 +164,8 @@ Then open the Vercel URL and run the three demo questions (`docs/demo.md`) throu
 ## Known tradeoffs
 - **Sleep / cold start:** a free Space sleeps after extended inactivity; the first request after wakes it (~tens of seconds). Acceptable for a demo.
 - **Haiku vs Sonnet:** the public path uses Haiku for cost; the `docs/day4.md` eval numbers are on Sonnet, so the live demo is slightly weaker than the benchmark. Set `CLAUDE_MODEL` back to `claude-sonnet-4-6` (and lower the cap) to match the eval exactly.
-- **Single replica:** required for the global cap — don't scale the Space up.
+- **Single replica:** required for the global cap *and* the embedded vector store — Qdrant's on-disk local mode locks to one process. Don't scale the Space up.
+- **Embedded store concurrency:** the local Qdrant client is shared across request threads (one lru_cached instance per worker). Fine under the per-IP rate limit and demo-level traffic; it is *not* a high-concurrency store. Refreshing the vectors means rebuilding `data/qdrant/` (Step 1) and re-pushing — a deliberate, deploy-time action, which is exactly the point: nothing changes it at runtime, so nothing can wipe it.
 
 ## Other hosts (same image)
 The root `Dockerfile` is host-agnostic (honors `$PORT`). Render: New → Web Service → from the Dockerfile, set the same env, deploy (free tier spins down on idle). Cloud Run: `gcloud run deploy --source .` with the same env (scales to zero). Fly: `fly.toml` is still in the repo (`dockerfile = "Dockerfile"`) if you add billing.

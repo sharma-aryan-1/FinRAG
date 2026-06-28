@@ -19,13 +19,16 @@ backend/.venv/
 .ruff_cache/
 
 # Heavy data NOT needed at runtime (offline ingestion inputs + eval outputs).
-# data/duckdb/ and data/bm25_index.pkl are intentionally NOT ignored — the
-# runtime needs them and the Dockerfile COPYs them explicitly.
+# data/duckdb/, data/bm25_index.pkl, and data/qdrant/ (the embedded vector store)
+# are intentionally NOT ignored — the runtime needs them and the Dockerfile COPYs
+# them explicitly.
 data/raw/
 data/processed/
 data/*.json
 data/eval_results_*.json
 data/smoke_results.json
+# The embedded store's runtime lock — never bake it in; Qdrant recreates it.
+data/qdrant/.lock
 
 # Repo meta
 .git/

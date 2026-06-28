@@ -11,6 +11,14 @@ class Settings(BaseSettings):
     anthropic_api_key: str | None = None
     gemini_api_key: str | None = None
     cohere_api_key: str
+    # Vector store location. Two mutually exclusive modes:
+    #   • qdrant_path set  → EMBEDDED Qdrant (in-process, on-disk at this path).
+    #     The public deploy uses this: the vector store is baked into the Docker
+    #     image alongside DuckDB + BM25, so there is no external cluster to idle-
+    #     wipe and no QDRANT_URL/KEY secret. Relative paths resolve from REPO_ROOT.
+    #   • qdrant_path empty → REMOTE Qdrant at qdrant_url (local docker-compose in
+    #     dev, or a managed cluster). The original behaviour, unchanged.
+    qdrant_path: str | None = None
     qdrant_url: str = "http://localhost:6333"
     qdrant_api_key: str | None = None
     duckdb_path: str = "./data/duckdb/finrag.duckdb"

@@ -20,7 +20,7 @@ from qdrant_client.models import (
 )
 
 from finrag.config import settings
-from finrag.ingestion.embed import COHERE_MODEL, COLLECTION_NAME
+from finrag.ingestion.embed import COHERE_MODEL, COLLECTION_NAME, make_qdrant_client
 
 
 # ── Public response model ─────────────────────────────────────────────────
@@ -55,10 +55,10 @@ def get_cohere_client() -> cohere.ClientV2:
 
 @lru_cache(maxsize=1)
 def get_qdrant_client() -> QdrantClient:
-    return QdrantClient(
-        url=settings.qdrant_url,
-        api_key=settings.qdrant_api_key,
-    )
+    # Embedded (on-disk) or remote, decided by settings.qdrant_path — see
+    # make_qdrant_client. lru_cache makes this the single client per worker that
+    # embedded mode requires.
+    return make_qdrant_client()
 
 
 # ── Query embedding ───────────────────────────────────────────────────────

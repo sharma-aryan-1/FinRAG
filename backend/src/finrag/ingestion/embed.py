@@ -11,6 +11,7 @@ Idempotent: re-running overwrites existing points by ID (deterministic hash).
 from __future__ import annotations
 
 import json
+import sys
 import time
 from collections.abc import Iterable, Iterator
 from pathlib import Path
@@ -21,7 +22,7 @@ from cohere.errors import TooManyRequestsError
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
-from finrag.config import settings
+from finrag.config import REPO_ROOT, settings
 from finrag.ingestion.parse import PROCESSED_DIR, Chunk
 
 # ── Constants ─────────────────────────────────────────────────────────────
@@ -48,8 +49,48 @@ COHERE_RETRY_INITIAL_BACKOFF_SECONDS = 30.0
 COHERE_MAX_RETRIES = 5
 
 
+# ── Clients ───────────────────────────────────────────────────────────────
+def make_qdrant_client() -> QdrantClient:
+    """Build the Qdrant client for both ingestion and retrieval.
+
+    Embedded mode (settings.qdrant_path set): an in-process, on-disk Qdrant — no
+    server, nothing external to wipe. This is what the public image ships, with
+    the store baked in next to DuckDB/BM25. Otherwise: a remote client at
+    settings.qdrant_url (dev docker-compose or a managed cluster).
+
+    Note on embedded mode: the on-disk store is locked to a single client per
+    process, so the lru_cached retrieval client (one per FastAPI worker) is the
+    intended access pattern; don't open a second concurrent client on the path.
+    """
+    if settings.qdrant_path:
+        path = Path(settings.qdrant_path)
+        if not path.is_absolute():
+            path = REPO_ROOT / path
+        path.mkdir(parents=True, exist_ok=True)
+        return QdrantClient(path=str(path))
+    return QdrantClient(url=settings.qdrant_url, api_key=settings.qdrant_api_key)
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────
 T = TypeVar("T")
+
+
+def _force_utf8_stdout() -> None:
+    """Make progress output (which uses ↳/⚠ glyphs) safe on any console.
+
+    Windows consoles default to cp1252, which can't encode those characters and
+    raises UnicodeEncodeError mid-run — crashing the upload after the collection
+    is created but before any points land (a silent empty-collection state). The
+    Docker image avoids this via PYTHONIOENCODING=utf-8; this makes a bare local
+    `python -m finrag.ingestion.embed` match it without needing the env var.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            try:
+                reconfigure(encoding="utf-8")
+            except (ValueError, OSError):  # redirected/non-reconfigurable stream
+                pass
 
 
 def _batched(seq: Iterable[T], n: int) -> Iterator[list[T]]:
@@ -149,10 +190,15 @@ def _chunk_to_point(chunk: Chunk, vector: list[float]) -> PointStruct:
 
 
 # ── Core ──────────────────────────────────────────────────────────────────
-def embed_and_upsert(chunks: list[Chunk]) -> int:
-    """Embed all chunks and upsert into Qdrant. Returns count of points written."""
+def embed_and_upsert(chunks: list[Chunk], qdrant: QdrantClient | None = None) -> int:
+    """Embed all chunks and upsert into Qdrant. Returns count of points written.
+
+    Accepts an optional client so the CLI can build one and reuse it for the
+    post-run count — embedded (on-disk) mode locks the store to a single client,
+    so opening a second one would fail.
+    """
     co = cohere.ClientV2(api_key=settings.cohere_api_key)
-    qdrant = QdrantClient(url=settings.qdrant_url, api_key=settings.qdrant_api_key)
+    qdrant = qdrant or make_qdrant_client()
     _ensure_collection(qdrant, COLLECTION_NAME, EMBED_DIM)
 
     qdrant_buf: list[PointStruct] = []
@@ -191,20 +237,24 @@ def embed_and_upsert(chunks: list[Chunk]) -> int:
 
 # ── CLI ───────────────────────────────────────────────────────────────────
 def main() -> None:
+    _force_utf8_stdout()
     chunks = _read_all_chunks(PROCESSED_DIR)
     print(f"Loaded {len(chunks)} chunks from {PROCESSED_DIR}\n")
     if not chunks:
         print("No chunks found. Run `finrag.ingestion.parse` first.")
         return
 
-    written = embed_and_upsert(chunks)
+    qdrant = make_qdrant_client()
+    written = embed_and_upsert(chunks, qdrant=qdrant)
 
-    # Verify final state via Qdrant's own count
-    qdrant = QdrantClient(url=settings.qdrant_url, api_key=settings.qdrant_api_key)
+    # Verify final state via Qdrant's own count (reusing the same client, so
+    # embedded-mode's single-client lock isn't violated).
     info = qdrant.get_collection(COLLECTION_NAME)
+    target = "embedded " + str(settings.qdrant_path) if settings.qdrant_path else settings.qdrant_url
     print(
         f"\nDone. {written} points written this run. "
-        f"Collection '{COLLECTION_NAME}' contains {info.points_count} total."
+        f"Collection '{COLLECTION_NAME}' contains {info.points_count} total "
+        f"({target})."
     )
 
 

@@ -33,10 +33,14 @@ WORKDIR /app
 COPY --from=builder --chown=appuser:appuser /app/backend /app/backend
 COPY --chown=appuser:appuser data/duckdb /app/data/duckdb
 COPY --chown=appuser:appuser data/bm25_index.pkl /app/data/bm25_index.pkl
+# Embedded Qdrant vector store — baked in like DuckDB/BM25 so the image is fully
+# self-contained (no external cluster to idle-wipe, no QDRANT_URL/KEY secret).
+COPY --chown=appuser:appuser data/qdrant /app/data/qdrant
 
 ENV PATH="/app/backend/.venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf-8 \
+    QDRANT_PATH=./data/qdrant \
     PORT=8000
 USER appuser
 EXPOSE 8000
