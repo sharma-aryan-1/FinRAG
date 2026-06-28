@@ -152,7 +152,7 @@ export default function Page() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Source on GitHub"
-            title="View source — built by Aryan Sharma"
+            title="View source · built by Aryan Sharma"
             className="text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition"
           >
             <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">

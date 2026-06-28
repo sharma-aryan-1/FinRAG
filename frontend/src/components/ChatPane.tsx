@@ -51,7 +51,7 @@ export function ChatPane({ messages, onAsk, selectedChunkId, onChunkSelect }: Pr
               Ask the filings<span className="text-lime-500 dark:text-lime-400">.</span>
             </h2>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-400">
-              AAPL · TSLA · JPM — FY2022–2024
+              AAPL · TSLA · JPM · FY2022–2024
             </p>
             <div className="mt-8 flex flex-col gap-2">
               {SUGGESTIONS.map((s) => (

@@ -15,7 +15,7 @@ const PREVIEW_CHARS = 200;
 export function ChunkCard({ chunk, index, selected, onSelect }: Props) {
   const isTable = chunk.chunk_type === 'table';
   const preview = isTable
-    ? '[Table — open citation to view]'
+    ? '[Table: open citation to view]'
     : chunk.text.length > PREVIEW_CHARS
       ? chunk.text.slice(0, PREVIEW_CHARS) + '…'
       : chunk.text;

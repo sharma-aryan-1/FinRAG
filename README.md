@@ -4,7 +4,7 @@
 
 An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder reranking, structured-data fusion via DuckDB, and a split-pane citation UI, built from the ground up to demonstrate production ML engineering.
 
-> The live demo runs the agent on **Claude Haiku 4.5** behind cost guardrails (per-IP rate limit + a global daily question cap) on a free Hugging Face Space — so a public URL can't run up the bill. It sleeps after extended idle; the first request wakes it (~tens of seconds). For unlimited use and the full Sonnet-grade eval numbers, run it locally (below).
+> The live demo runs the agent on **Claude Haiku 4.5** behind cost guardrails (per-IP rate limit + a global daily question cap) on a free Hugging Face Space, so a public URL can't run up the bill. It sleeps after extended idle; the first request wakes it (~tens of seconds). For unlimited use and the full Sonnet-grade eval numbers, run it locally (below).
 
 > All five days of the build are complete: retrieval, the structured-data side, the agent layer (LangGraph + Claude tool use + streamed trace UI), a tier-stratified **evaluation harness** with an LLM-judge, and a local **edge-inference variant** (Llama 3.2 3B) benchmarked against the cloud agent. See [What the eval proves](#what-the-eval-proves) and the [Roadmap](#roadmap).
 
@@ -19,9 +19,9 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 - **Citation-clean by construction**: every retrieved chunk carries full provenance (ticker, fiscal year, section, accession number, SEC URL), no joins needed at query time
 - **LangGraph agent** (`/agent`): plans and routes each question (semantic retrieval vs structured SQL), runs a Claude Sonnet 4.6 native tool-loop over three tools (`sql_query`, `calculator`, `lookup_citation`), and synthesizes a grounded, cited answer
 - **Streamed agent trace** (`/agent/stream`, Server-Sent Events): node-level reasoning milestones *and* token-by-token answer streaming, rendered as a live trace UI (with the agent's generated SQL inline)
-- **Provider seam**: synthesis/agent backend is swappable between Anthropic Claude, Google Gemini, **and a local Llama 3.2 3B** (Ollama) behind neutral types — all three wired for evaluation A/B, selected live by one setting
+- **Provider seam**: synthesis/agent backend is swappable between Anthropic Claude, Google Gemini, **and a local Llama 3.2 3B** (Ollama) behind neutral types. All three are wired for evaluation A/B, selected live by one setting
 - **Tier-stratified eval harness** (`eval/harness.py`): 30 questions × 4 difficulty tiers (factual / narrative / multihop / honesty), ground truth derived live from the `financial_facts` table, scored by deterministic checks (number / citation / refusal) **plus** an LLM-judge (faithfulness / relevance / context-precision). Closed an eval→improve loop that caught and fixed a real faithfulness defect
-- **Edge variant**: the same agent runs on a local 3B model with zero cloud cost — and the benchmark surfaced a counterintuitive finding about *why* the agentic architecture matters for small models (see [below](#what-the-eval-proves))
+- **Edge variant**: the same agent runs on a local 3B model with zero cloud cost, and the benchmark surfaced a counterintuitive finding about *why* the agentic architecture matters for small models (see [below](#what-the-eval-proves))
 - **CI-ready smoke harness**: 8 canary cases covering filter compliance, score sanity, cross-company retrieval; runs in <2s
 
 ---
@@ -97,7 +97,7 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 
 ## What the eval proves
 
-"I built RAG" is common. "I built RAG and can show you its faithfulness, citation-validity, and honesty numbers — across difficulty tiers, with a cost/quality provider comparison, and a defect the eval caught and I fixed" is the production-RAG signal. The harness (`finrag.eval.harness`) runs 30 questions across four tiers and scores each with both deterministic checks and a Claude LLM-judge. Full method and analysis in [`docs/day4.md`](./docs/day4.md) and [`docs/day5.md`](./docs/day5.md).
+"I built RAG" is common. "I built RAG and can show you its faithfulness, citation-validity, and honesty numbers, across difficulty tiers, with a cost/quality provider comparison, and a defect the eval caught and I fixed" is the production-RAG signal. The harness (`finrag.eval.harness`) runs 30 questions across four tiers and scores each with both deterministic checks and a Claude LLM-judge. Full method and analysis in [`docs/day4.md`](./docs/day4.md) and [`docs/day5.md`](./docs/day5.md).
 
 **Cloud baseline (Claude Sonnet 4.6, 30 cases, 0 errors, ~$0.39/run):**
 
@@ -111,7 +111,7 @@ An agentic RAG system over SEC 10-K filings. Hybrid retrieval, cross-encoder rer
 
 The eval also closed a loop: the judge flagged factually-correct answers adding ungrounded flourish ("as disclosed in the 10-K", "record-setting profit"); a one-line "don't embellish" prompt rule lifted multihop faithfulness 0.88 → 0.97 with accuracy unchanged. **The eval found a real defect and proved the fix.**
 
-**Edge variant (local Llama 3.2 3B via Ollama, $0 generation cost) — and the finding it produced:**
+**Edge variant (local Llama 3.2 3B via Ollama, $0 generation cost), and the finding it produced:**
 
 The interesting result is an A/B between the full agentic tool-loop and a degraded synthesis-only mode on the same 3B model. It **inverts the usual assumption** that small models can't handle tools:
 
@@ -122,7 +122,7 @@ The interesting result is an A/B between the full agentic tool-loop and a degrad
 | Faithfulness | 0.84 | 0.47 |
 | Overall accuracy (n=30) | **0.59** | 0.23 |
 
-A 3B model can't read an exact 12-digit figure out of prose, but it *can* reliably **invoke** a `sql_query` tool — so the deterministic SQL layer supplies the precision the model lacks. **The agentic architecture is what makes a small edge model viable, not a tax on it.** Strip the tools away "to simplify," and factual accuracy collapses from 0.80 to zero. (A bonus deployment finding: a 4GB consumer GPU can't safely co-host even a 3B model with a desktop session — CPU inference is the stable edge path. See `docs/day5.md`.)
+A 3B model can't read an exact 12-digit figure out of prose, but it *can* reliably **invoke** a `sql_query` tool, so the deterministic SQL layer supplies the precision the model lacks. **The agentic architecture is what makes a small edge model viable, not a tax on it.** Strip the tools away "to simplify," and factual accuracy collapses from 0.80 to zero. (A bonus deployment finding: a 4GB consumer GPU can't safely co-host even a 3B model with a desktop session; CPU inference is the stable edge path. See `docs/day5.md`.)
 
 ---
 
@@ -191,7 +191,7 @@ cd frontend
 npm run dev
 ```
 
-Open **http://localhost:3000** in your browser. Ask a question like *"How did Apple's services revenue change in 2023?"* and watch the agent's trace stream live — query rewrite, route decision, retrieval, any tool calls (with the generated SQL inline), and the token-by-token answer — then click any citation to view the full source passage.
+Open **http://localhost:3000** in your browser. Ask a question like *"How did Apple's services revenue change in 2023?"* and watch the agent's trace stream live: query rewrite, route decision, retrieval, any tool calls (with the generated SQL inline), and the token-by-token answer. Then click any citation to view the full source passage.
 
 ---
 
@@ -268,7 +268,7 @@ See [`docs/day1.md`](./docs/day1.md) … [`docs/day5.md`](./docs/day5.md) for in
 - **Retrieval-quality engineering**, not just "RAG with cosine similarity", every stage of the funnel (BM25, dense, RRF, rerank) is in there because it solves a specific class of query that the others fail on.
 - **Modal-split data architecture**: text in Qdrant for semantic retrieval, tables in DuckDB for SQL. Same source documents, two representations, citation-clean across both. This is what enterprise AI looks like in practice, most portfolio RAG projects skip it.
 - **Production discipline**: typed config, deterministic chunk IDs, idempotent ingestion, exponential-backoff retry on rate limits, payload-filterable retrieval, smoke harness with score floors calibrated per stage. The kind of system that survives contact with reality, not just a demo.
-- **Eval-first thinking**: a tier-stratified question set with ground truth derived live from the data, scored by deterministic checks plus an LLM-judge — hand-rolled rather than reaching for Ragas, to keep the dependency tree lean and the scoring legible. The eval set is the spec; the code is the means.
+- **Eval-first thinking**: a tier-stratified question set with ground truth derived live from the data, scored by deterministic checks plus an LLM-judge, hand-rolled rather than reaching for Ragas, to keep the dependency tree lean and the scoring legible. The eval set is the spec; the code is the means.
 
 ---
 

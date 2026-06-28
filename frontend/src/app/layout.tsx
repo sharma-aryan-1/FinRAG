@@ -13,7 +13,7 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', displ
 // metadataBase makes relative OG/Twitter URLs absolute and is what lets the link
 // unfurl into a proper preview card when shared (LinkedIn, Slack, iMessage).
 const SITE_URL = 'https://finrag-front.vercel.app';
-const TITLE = 'FinRAG — Agentic RAG over SEC 10-K filings';
+const TITLE = 'FinRAG: Agentic RAG over SEC 10-K filings';
 const DESCRIPTION =
   'An agentic RAG system over SEC 10-K filings: hybrid retrieval, cross-encoder reranking, ' +
   'DuckDB structured-data fusion, and a streamed LangGraph agent. Built by Aryan Sharma.';
